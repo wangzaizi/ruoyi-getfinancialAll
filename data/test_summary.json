@@ -1,0 +1,60 @@
+{
+  "target_year": 2024,
+  "test_mode": true,
+  "total_cities": 5,
+  "success_count": 1,
+  "failed_count": 4,
+  "total_files": 12,
+  "results": [
+    {
+      "city": "赣州市",
+      "success": true,
+      "website": "https://www.ganzhou.gov.cn/",
+      "reports_found": 11,
+      "files_downloaded": 12,
+      "errors": [
+        "下载失败: 360700000409ï¼èµ£å·å¸ä¾éåä½ç¤¾èåç¤¾.xlsx"
+      ]
+    },
+    {
+      "city": "北京市",
+      "success": false,
+      "website": "https://www.beijing.gov.cn/",
+      "reports_found": 0,
+      "files_downloaded": 0,
+      "errors": [
+        "未找到财政报告"
+      ]
+    },
+    {
+      "city": "上海市",
+      "success": false,
+      "website": "https://www.shanghai.gov.cn/",
+      "reports_found": 0,
+      "files_downloaded": 0,
+      "errors": [
+        "未找到财政报告"
+      ]
+    },
+    {
+      "city": "杭州市",
+      "success": false,
+      "website": "https://www.hangzhou.gov.cn/",
+      "reports_found": 0,
+      "files_downloaded": 0,
+      "errors": [
+        "未找到财政报告"
+      ]
+    },
+    {
+      "city": "深圳市",
+      "success": false,
+      "website": "http://www.shenzhen.gov.cn/",
+      "reports_found": 0,
+      "files_downloaded": 0,
+      "errors": [
+        "未找到财政报告"
+      ]
+    }
+  ]
+}
