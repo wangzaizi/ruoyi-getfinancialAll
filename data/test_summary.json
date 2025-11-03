@@ -2,26 +2,24 @@
   "target_year": 2024,
   "test_mode": true,
   "total_cities": 5,
-  "success_count": 2,
-  "failed_count": 3,
-  "total_files": 38,
+  "success_count": 3,
+  "failed_count": 2,
+  "total_files": 36,
   "results": [
     {
       "city": "赣州市",
-      "success": false,
+      "success": true,
       "website": "https://czj.ganzhou.gov.cn",
-      "reports_found": 0,
-      "files_downloaded": 0,
-      "errors": [
-        "未找到财政报告"
-      ]
+      "reports_found": 2,
+      "files_downloaded": 3,
+      "errors": []
     },
     {
       "city": "北京市",
       "success": true,
       "website": "https://czj.beijing.gov.cn",
       "reports_found": 2,
-      "files_downloaded": 3,
+      "files_downloaded": 1,
       "errors": []
     },
     {
@@ -29,7 +27,7 @@
       "success": true,
       "website": "https://czj.sh.gov.cn",
       "reports_found": 2,
-      "files_downloaded": 35,
+      "files_downloaded": 32,
       "errors": []
     },
     {
@@ -45,11 +43,11 @@
     {
       "city": "深圳市",
       "success": false,
-      "website": null,
+      "website": "http://szfb.sz.gov.cn",
       "reports_found": 0,
       "files_downloaded": 0,
       "errors": [
-        "未找到政府网站"
+        "未找到财政报告"
       ]
     }
   ]

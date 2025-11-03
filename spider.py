@@ -49,6 +49,14 @@ class FinanceReportSpider:
             "杭州市": "https://www.hangzhou.gov.cn",
             "深圳市": "https://www.sz.gov.cn",
         }
+        # 为requests配置连接池，提升并发能力
+        try:
+            from requests.adapters import HTTPAdapter
+            adapter = HTTPAdapter(pool_connections=MAX_WORKERS * 2, pool_maxsize=MAX_WORKERS * 4)
+            self.session.mount('http://', adapter)
+            self.session.mount('https://', adapter)
+        except Exception:
+            pass
         
     def search_government_website(self, city: str) -> Optional[str]:
         """
@@ -499,6 +507,8 @@ class FinanceReportSpider:
                     for r in page_reports:
                         key = r.get('url')
                         if key and key not in added:
+                            # 标记该链接来源于公开栏目，用于附件下载放宽策略
+                            r['from_public_section'] = True
                             reports.append(r)
                             added.add(key)
                 except Exception as ex:
@@ -540,7 +550,7 @@ class FinanceReportSpider:
                             text_all = f"{title} {href}"
                             if self.matches_keywords(text_all, city_name=city):
                                 if full not in added:
-                                    reports.append({'title': title or href.split('/')[-1], 'url': full})
+                                    reports.append({'title': title or href.split('/')[-1], 'url': full, 'from_public_section': True})
                                     added.add(full)
                                     page_added += 1
 
@@ -548,7 +558,7 @@ class FinanceReportSpider:
                             if any(full.lower().endswith(ext) for ext in TARGET_FILE_TYPES):
                                 if self.matches_keywords(text_all, city_name=city):
                                     if full not in added:
-                                        reports.append({'title': title or href.split('/')[-1], 'url': full})
+                                        reports.append({'title': title or href.split('/')[-1], 'url': full, 'from_public_section': True})
                                         added.add(full)
                                         page_added += 1
 
@@ -573,7 +583,7 @@ class FinanceReportSpider:
 
         return reports
     
-    def extract_pdf_links(self, page_url: str, city_name: str) -> List[Dict]:
+    def extract_pdf_links(self, page_url: str, city_name: str, download_all: bool = False) -> List[Dict]:
         """
         从页面中提取符合条件的文件链接（按目标年份与层级过滤）
         """
@@ -601,7 +611,7 @@ class FinanceReportSpider:
                     # 检查iframe src本身是否是文件
                     if any(iframe_url.lower().endswith(ext) for ext in TARGET_FILE_TYPES):
                         text_all = f"iframe_content {iframe_src}"
-                        if self.matches_keywords(text_all, city_name=city_name):
+                        if download_all or self.matches_keywords(text_all, city_name=city_name):
                             pdf_links.append({
                                 'title': 'iframe_content',
                                 'url': iframe_url
@@ -634,7 +644,7 @@ class FinanceReportSpider:
                         title = unquote(href.split('/')[-1])
 
                     text_all = f"{title} {href}"
-                    if self.matches_keywords(text_all, city_name=city_name):
+                    if download_all or self.matches_keywords(text_all, city_name=city_name):
                         pdf_links.append({'url': full_url, 'title': title})
                         processed_urls.add(full_url)
                 except Exception:
@@ -727,6 +737,24 @@ class FinanceReportSpider:
                 return False
         
         return False
+
+    def write_source_info(self, file_path: str, source_page_url: str, file_url: str, title: str, city: str):
+        """
+        在下载目录写入同名的来源说明txt，记录来源页面与直链，便于追溯。
+        """
+        try:
+            base = os.path.splitext(file_path)[0]
+            txt_path = base + ".source.txt"
+            os.makedirs(os.path.dirname(file_path), exist_ok=True)
+            with open(txt_path, 'w', encoding='utf-8') as f:
+                f.write(f"城市: {city}\n")
+                f.write(f"标题: {title}\n")
+                f.write(f"来源页面: {source_page_url}\n")
+                f.write(f"文件直链: {file_url}\n")
+                f.write(f"保存文件: {os.path.basename(file_path)}\n")
+                f.write(f"时间: {datetime.now().isoformat()}\n")
+        except Exception as e:
+            logger.debug(f"写入来源说明失败 {file_path}: {e}")
     
     def crawl_city(self, city: str) -> Dict:
         """
@@ -774,17 +802,22 @@ class FinanceReportSpider:
             
             for report in reports:
                 try:
-                    # 提取页面中的符合条件的文件链接
-                    pdf_links = self.extract_pdf_links(report['url'], city_name=city)
+                    # 提取页面中的文件链接
+                    # 如果该链接来自公开栏目，则下载页面中的所有附件（不再按关键词过滤）
+                    download_all = bool(report.get('from_public_section'))
+                    pdf_links = self.extract_pdf_links(report['url'], city_name=city, download_all=download_all)
                     
                     # 如果没有直接找到PDF，尝试下载页面本身
                     if not pdf_links:
                         # 检查报告URL本身是否是文件
                         if any(report['url'].lower().endswith(ext) for ext in TARGET_FILE_TYPES):
                             # 直链也必须通过关键词过滤
-                            text_all = f"{report.get('title', '')} {report['url']}"
-                            if self.matches_keywords(text_all, city_name=city):
-                                pdf_links = [{'title': report['title'], 'url': report['url']}]
+                            if download_all:
+                                pdf_links = [{'title': report.get('title', '') or report['url'].split('/')[-1], 'url': report['url']}]
+                            else:
+                                text_all = f"{report.get('title', '')} {report['url']}"
+                                if self.matches_keywords(text_all, city_name=city):
+                                    pdf_links = [{'title': report['title'], 'url': report['url']}]
                     
                     # 下载文件
                     for pdf_link in pdf_links:
@@ -800,11 +833,15 @@ class FinanceReportSpider:
                         
                         # 检查是否已下载（检查文件大小，避免下载空文件）
                         if os.path.exists(save_path) and os.path.getsize(save_path) > 0:
+                            # 仍写入/更新来源说明
+                            self.write_source_info(save_path, report['url'], pdf_link['url'], pdf_link.get('title', filename), city)
                             logger.info(f"{city}: 文件已存在，跳过 {filename}")
                             downloaded_count += 1
                             continue
                         
                         if self.download_file(pdf_link['url'], save_path):
+                            # 写入来源说明txt
+                            self.write_source_info(save_path, report['url'], pdf_link['url'], pdf_link.get('title', filename), city)
                             downloaded_count += 1
                             logger.info(f"{city}: 下载成功 {filename}")
                             time.sleep(REQUEST_DELAY)
@@ -888,23 +925,37 @@ class FinanceReportSpider:
             completed_cities = set()
         
         # 爬取每个城市
-        for city in tqdm(cities_to_crawl, desc="爬取进度"):
-            # 检查是否已完成（非测试模式）
-            if not test_mode and city in completed_cities:
-                logger.info(f"{city}: 已爬取，跳过")
-                if city in existing_results:
-                    results.append(existing_results[city])
-                continue
-            
-            result = self.crawl_city(city)
-            results.append(result)
-            
-            # 保存进度
-            if not test_mode:
-                self.save_progress(results)
-            
-            # 延迟
-            time.sleep(REQUEST_DELAY)
+        if test_mode:
+            for city in tqdm(cities_to_crawl, desc="爬取进度"):
+                result = self.crawl_city(city)
+                results.append(result)
+                time.sleep(REQUEST_DELAY)
+        else:
+            # 使用线程池并发爬取以充分利用CPU/内存
+            from concurrent.futures import ThreadPoolExecutor, as_completed
+            futures = {}
+            with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
+                for city in cities_to_crawl:
+                    if city in completed_cities:
+                        logger.info(f"{city}: 已爬取，跳过")
+                        if city in existing_results:
+                            results.append(existing_results[city])
+                        continue
+                    futures[executor.submit(self.crawl_city, city)] = city
+
+                done_count = 0
+                for future in as_completed(futures):
+                    city = futures[future]
+                    try:
+                        res = future.result()
+                        results.append(res)
+                    except Exception as e:
+                        logger.error(f"{city}: 并发任务失败: {e}")
+                    finally:
+                        done_count += 1
+                        # 按频率保存进度
+                        if done_count % SAVE_PROGRESS_EVERY == 0:
+                            self.save_progress(results)
         
         # 统计结果
         success_count = sum(1 for r in results if r['success'])
