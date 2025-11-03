@@ -16,6 +16,7 @@ from datetime import datetime
 
 from config import *
 from cities_data import CITIES
+from site_mappings import CITY_SITE_OVERRIDES
 
 
 # 配置日志
@@ -58,67 +59,177 @@ class FinanceReportSpider:
         except Exception:
             pass
         
+    def resolve_city_sites(self, city: str) -> Dict[str, Optional[str]]:
+        """
+        解析城市站点：优先使用映射；否则通过拼音组合规则探测。
+        返回：{"gov": 市政府根域, "fin": 财政局根域}
+        """
+        # 优先用显式映射
+        mapped = CITY_SITE_OVERRIDES.get(city, {})
+        gov_url = mapped.get('gov')
+        fin_url = mapped.get('fin')
+
+        # 若任何一个缺失，则尝试构造域名进行补全
+        if not gov_url or not fin_url:
+            try:
+                from pypinyin import pinyin, Style
+                city_name_for_pinyin = city.replace("市", "")
+                pinyin_full_list = pinyin(city_name_for_pinyin, style=Style.NORMAL)
+                city_pinyin_full = "".join([item[0] for item in pinyin_full_list])
+                pinyin_first_letter_list = pinyin(city_name_for_pinyin, style=Style.FIRST_LETTER)
+                city_pinyin_first = "".join([item[0] for item in pinyin_first_letter_list])
+
+                candidates_gov = [
+                    f"https://www.{city_pinyin_full}.gov.cn",
+                    f"https://{city_pinyin_full}.gov.cn",
+                    f"http://www.{city_pinyin_full}.gov.cn",
+                    f"http://{city_pinyin_full}.gov.cn",
+                ]
+                candidates_fin = [
+                    f"https://czj.{city_pinyin_full}.gov.cn",
+                    f"https://czt.{city_pinyin_full}.gov.cn",
+                    f"https://{city_pinyin_first}fb.{city_pinyin_first}.gov.cn",  # 如 szfb.sz.gov.cn
+                    f"https://{city_pinyin_full}cz.gov.cn",
+                ]
+
+                def first_alive(urls):
+                    for u in urls:
+                        try:
+                            r = self.session.head(u, allow_redirects=True, timeout=6)
+                            if r.status_code == 200:
+                                return r.url
+                        except Exception:
+                            continue
+                    return None
+
+                if not gov_url:
+                    gov_url = first_alive(candidates_gov)
+                if not fin_url:
+                    fin_url = first_alive(candidates_fin)
+            except Exception:
+                pass
+
+        return {"gov": gov_url, "fin": fin_url}
+
     def search_government_website(self, city: str) -> Optional[str]:
         """
-        通过构造URL（基于拼音和首字母缩写）来查找并验证给定城市的财政局官方网站。
+        兼容：显式映射 > 财政局探测 > 政府站点，返回一个可用根域。
         """
-        from pypinyin import pinyin, Style
-
-        logger.info(f"[{city}] 开始通过构造URL查找财政局网站...")
-        
-        # 移除城市名称中的“市”字以便生成拼音
-        city_name_for_pinyin = city.replace("市", "")
-        
-        # 1. 获取全拼
-        pinyin_full_list = pinyin(city_name_for_pinyin, style=Style.NORMAL)
-        city_pinyin_full = "".join([item[0] for item in pinyin_full_list])
-        
-        # 2. 获取首字母
-        pinyin_first_letter_list = pinyin(city_name_for_pinyin, style=Style.FIRST_LETTER)
-        city_pinyin_first = "".join([item[0] for item in pinyin_first_letter_list])
-
-        # 构造可能的域名列表
-        possible_domains = [
-            # 财政局常见二级域
-            f"czj.{city_pinyin_full}.gov.cn",
-            f"czj.{city_pinyin_first}.gov.cn",
-            # 财政厅/财政变体
-            f"czt.{city_pinyin_full}.gov.cn",
-            f"czt.{city_pinyin_first}.gov.cn",
-            f"{city_pinyin_full}cz.gov.cn",
-            # 财政局英文/缩写（如深圳：szfb.sz.gov.cn）
-            f"{city_pinyin_first}fb.{city_pinyin_first}.gov.cn",
-            f"{city_pinyin_first}fb.{city_pinyin_full}.gov.cn",
-            f"{city_pinyin_full}fb.{city_pinyin_first}.gov.cn",
-            f"{city_pinyin_full}fb.{city_pinyin_full}.gov.cn",
-        ]
-
-        for domain in possible_domains:
-            for scheme in ["https://", "http://"]: # 优先使用HTTPS
-                url = f"{scheme}{domain}"
-                try:
-                    # 使用HEAD请求快速检查
-                    response = self.session.head(url, allow_redirects=True, timeout=7)
-                    if response.status_code == 200:
-                        final_url = urlparse(response.url)
-                        base_url = f"{final_url.scheme}://{final_url.netloc}"
-                        
-                        # 进一步验证页面标题
-                        page_res = self.session.get(base_url, timeout=10)
-                        page_soup = BeautifulSoup(page_res.content, 'lxml')
-                        page_title = page_soup.title.string if page_soup.title else ""
-
-                        if "财政" in page_title:
-                            logger.info(f"[{city}] 通过构造URL找到并验证了财政局网站: {base_url}")
-                            return base_url
-                        else:
-                            logger.warning(f"[{city}] 网站 {base_url} 标题不含'财政'，继续尝试。")
-                            
-                except requests.RequestException:
-                    continue # 连接失败，继续尝试下一个
-
-        logger.error(f"[{city}] 未能通过构造URL找到有效的财政局网站。")
+        sites = self.resolve_city_sites(city)
+        # 优先财政局
+        for cand in [sites.get('fin'), sites.get('gov')]:
+            if not cand:
+                continue
+            try:
+                resp = self.session.head(cand, allow_redirects=True, timeout=7)
+                if resp.status_code == 200:
+                    logger.info(f"[{city}] 使用映射/探测到的网站: {resp.url}")
+                    return resp.url
+            except Exception:
+                continue
+        logger.error(f"[{city}] 未能确定有效的网站根域")
         return None
+
+    def verify_site_alive(self, url: Optional[str]) -> bool:
+        if not url:
+            return False
+        try:
+            r = self.session.head(url, allow_redirects=True, timeout=7)
+            return r.status_code == 200
+        except Exception:
+            return False
+
+    def test_city_mappings(self, cities: Optional[List[str]] = None) -> Dict[str, Dict[str, str]]:
+        """
+        仅基于 site_mappings.py 的 CITY_SITE_OVERRIDES 进行测试与迭代：
+        - 优先使用显式映射并验证可用性
+        - 缺失或不可用时，通过百度搜索给出“建议值”（不落地新文件，不自动改写映射）
+        - 全部结果通过日志打印，便于人工迭代维护 site_mappings.py
+        返回：城市→结果 字典（内含建议值）
+        """
+
+        def baidu_guess(city: str, query: str) -> Optional[str]:
+            try:
+                q = f"{city} {query}"
+                url = f"https://www.baidu.com/s?wd={quote(q)}"
+                r = self.session.get(url, timeout=TIMEOUT)
+                if r.status_code != 200:
+                    return None
+                soup = BeautifulSoup(r.text, 'html.parser')
+                # 从所有链接与文本中抽取 gov.cn 根域
+                candidates = set()
+                import re as _re
+                pattern = _re.compile(r"https?://[\w\.-]*gov\.cn")
+                for a in soup.find_all('a', href=True):
+                    m = pattern.search(a.get('href', ''))
+                    if m:
+                        candidates.add(m.group(0))
+                    t = a.get_text() or ''
+                    m2 = pattern.search(t)
+                    if m2:
+                        candidates.add(m2.group(0))
+                # 返回第一个可访问的
+                for c in list(candidates)[:10]:
+                    try:
+                        resp = self.session.head(c, allow_redirects=True, timeout=6)
+                        if resp.status_code == 200:
+                            return resp.url
+                    except Exception:
+                        continue
+                return None
+            except Exception:
+                return None
+
+        cities_to_check = cities or CITIES
+        results: Dict[str, Dict[str, str]] = {}
+
+        total = len(cities_to_check)
+        logger.info(f"[映射测试] 共 {total} 个城市，基于 site_mappings.py 进行验证与建议 …")
+
+        for city in cities_to_check:
+            mapped = CITY_SITE_OVERRIDES.get(city, {})
+            gov_m = mapped.get('gov')
+            fin_m = mapped.get('fin')
+
+            gov_ok = self.verify_site_alive(gov_m)
+            fin_ok = self.verify_site_alive(fin_m)
+
+            gov_suggest = None
+            fin_suggest = None
+
+            # 不可用或缺失时，尝试从百度给建议
+            if not gov_ok:
+                gov_suggest = baidu_guess(city, "人民政府 官网") or baidu_guess(city, "政府网站")
+            if not fin_ok:
+                fin_suggest = baidu_guess(city, "财政局 官网") or baidu_guess(city, "财政局 网站") or baidu_guess(city, "财政厅 官网")
+
+            # 再次校验建议是否可用
+            if gov_suggest and not self.verify_site_alive(gov_suggest):
+                gov_suggest = None
+            if fin_suggest and not self.verify_site_alive(fin_suggest):
+                fin_suggest = None
+
+            results[city] = {
+                'gov_mapped': gov_m or '',
+                'gov_ok': str(gov_ok),
+                'gov_suggest': gov_suggest or '',
+                'fin_mapped': fin_m or '',
+                'fin_ok': str(fin_ok),
+                'fin_suggest': fin_suggest or ''
+            }
+
+            # 打印日志（可直接复制到 site_mappings.py 的推荐行）
+            if (not gov_ok and gov_suggest) or (not fin_ok and fin_suggest):
+                logger.info(
+                    f"[建议补全] {city}: 建议添加/更新 -> {{'gov': '{gov_suggest or gov_m or ''}', 'fin': '{fin_suggest or fin_m or ''}'}}"
+                )
+            elif not gov_ok and not fin_ok:
+                logger.warning(f"[缺失] {city}: gov/fin 映射均不可用且未找到可靠建议，请手动确认")
+            else:
+                logger.info(f"[通过] {city}: gov_ok={gov_ok}, fin_ok={fin_ok}")
+
+        logger.info("[映射测试] 完成。请根据日志中的 [建议补全] 行，更新 site_mappings.py 后再次运行。")
+        return results
     
     def matches_keywords(self, text: str, city_name: str) -> bool:
         """

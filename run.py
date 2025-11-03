@@ -1,6 +1,7 @@
 import sys
 import subprocess
 from spider import FinanceReportSpider
+from mapping_tool import run_city_mapping_mode as mapping_run_city_mapping_mode
 from utils import print_statistics
 
 def run_test_mode():
@@ -29,6 +30,14 @@ def run_full_mode():
         import traceback
         traceback.print_exc()
 
+def run_city_mapping_mode():
+    """运行城市站点映射测试（不改 spider.py，只基于 site_mappings.py）"""
+    print("\n开始城市站点映射测试（日志中给出建议，手动更新 site_mappings.py）……")
+    try:
+        mapping_run_city_mapping_mode(auto_update=False)
+    except Exception as e:
+        print(f"运行失败: {e}")
+
 def main():
     print("="*60)
     print("中国地级行政区划财政报告爬虫")
@@ -56,7 +65,8 @@ def main():
     print("\n请选择运行模式：")
     print("  1. 测试模式（测试少量城市）")
     print("  2. 完整模式（爬取所有334个城市）")
-    mode = input("请输入选择 (1/2): ").strip()
+    print("  3. 城市站点映射测试（生成/验证市政府/财政局网站映射）")
+    mode = input("请输入选择 (1/2/3): ").strip()
     
     if mode == "1":
         run_test_mode()
@@ -66,6 +76,8 @@ def main():
             run_full_mode()
         else:
             print("已取消")
+    elif mode == "3":
+        run_city_mapping_mode()
     else:
         print("无效选择，已取消。")
 
