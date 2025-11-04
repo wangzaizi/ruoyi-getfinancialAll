@@ -307,6 +307,46 @@ class FinanceReportSpider:
             return False
 
         return True
+
+    def _contains_level_markers(self, city_name: str, text: str) -> bool:
+        if not text:
+            return False
+        name = city_name.replace('市', '')
+        markers = [name, f"{name}市", '本级', '市级']
+        return any(m in text for m in markers)
+
+    def _is_final_decision_html(self, url: str, title: str, city: str) -> bool:
+        """
+        最终 HTML 校验：不再要求 URL 本身包含关键词；
+        依据：链接元素文本/标题 或 目标页 <title>/首屏标题 是否同时包含：TARGET_YEAR、"决算"、本级标识（市级/本级/城市名）。
+        仅对 HTML 页面生效（直链文件不在此判断范围）。
+        """
+        lower = (url or '').lower()
+        # 必须是 HTML 页（不是文件直链）
+        if any(lower.endswith(ext) for ext in TARGET_FILE_TYPES):
+            return False
+
+        context_text = title or ''
+        # 先用元素文本判断
+        if (str(TARGET_YEAR) in context_text) and ('决算' in context_text) and self._contains_level_markers(city, context_text):
+            return True
+
+        # 再尝试抓取目标页标题增强判断
+        try:
+            resp = self.session.get(url, timeout=TIMEOUT)
+            if resp.status_code == 200 and 'text/html' in resp.headers.get('Content-Type', '').lower():
+                soup = BeautifulSoup(resp.text, 'html.parser')
+                page_title = (soup.title.get_text().strip() if soup.title else '')
+                # 常见正文标题备选
+                h1 = soup.find('h1')
+                h1_text = h1.get_text().strip() if h1 else ''
+                combined = f"{page_title} {h1_text}"
+                if (str(TARGET_YEAR) in combined) and ('决算' in combined) and self._contains_level_markers(city, combined):
+                    return True
+        except Exception:
+            pass
+
+        return False
     
     def find_next_page_url(self, page_url: str, soup: BeautifulSoup) -> Optional[str]:
         """
@@ -606,8 +646,29 @@ class FinanceReportSpider:
         reports = []
 
         try:
-            # 公开类栏目关键词
-            public_keywords = ["公开", "信息公开", "政务公开", "政府信息公开", "财政信息公开", "财政公开"]
+            # 公开类栏目关键词（扩充涵盖典型路径用语）
+            public_keywords = [
+                "公开", "信息公开", "政务公开", "政府信息公开", "财政信息公开", "财政公开",
+                "法定主动公开内容", "重点领域信息公开", "基础信息公开",
+                "财政资金", "财政资金领域信息公开",
+                "财政信息", "财政预决算", "预决算", "政府预决算",
+                "政府决算公开", "决算公开", "财政决算公开",
+                "市政府财政预决算", "三公"
+            ]
+
+            mid_level_keywords = [
+                "法定主动公开内容", "财政资金", "财政信息", "财政预决算", "预决算", "政府预决算",
+                "政府决算公开", "决算公开", "财政决算公开", "重点领域信息公开", "财政资金领域信息公开",
+                "基础信息公开", "市政府财政预决算", "三公"
+            ]
+
+            def _keyword_score(text: str, keywords: List[str]) -> int:
+                t = (text or "").lower()
+                score = 0
+                for kw in keywords:
+                    if kw.lower() in t:
+                        score += 1
+                return score
 
             def same_domain(url_a: str, url_b: str) -> bool:
                 try:
@@ -662,10 +723,17 @@ class FinanceReportSpider:
                     for r in page_reports:
                         key = r.get('url')
                         if key and key not in added:
+                            # 若为HTML页，需满足“最终HTML需要包含 2024+决算+本级/市级/城市名”的规则
+                            is_file_link = any(key.lower().endswith(ext) for ext in TARGET_FILE_TYPES)
+                            if (not is_file_link) and (not self._is_final_decision_html(key, r.get('title',''), city)):
+                                continue
                             # 标记该链接来源于公开栏目，用于附件下载放宽策略
                             r['from_public_section'] = True
                             reports.append(r)
                             added.add(key)
+                            # 早停：当前城市找到一个符合的 HTML 目标页后直接返回
+                            if not is_file_link:
+                                return reports
                 except Exception as ex:
                     logger.debug(f"解析栏目失败 {start_url}: {ex}")
 
@@ -675,8 +743,8 @@ class FinanceReportSpider:
                 from collections import deque
                 queue = deque()
                 visited = set()
-                max_pages = 120  # 上限，防止爬爆
-                depth_limit = 2  # 栏目内两层深度
+                max_pages = 180  # 上限，防止爬爆
+                depth_limit = 3  # 根据示例路径，允许更深一层
 
                 for u in candidate_section_urls:
                     queue.append((u, 0))
@@ -704,10 +772,18 @@ class FinanceReportSpider:
                             full = urljoin(current_url, href)
                             text_all = f"{title} {href}"
                             if self.matches_keywords(text_all, city_name=city):
-                                if full not in added:
-                                    reports.append({'title': title or href.split('/')[-1], 'url': full, 'from_public_section': True})
-                                    added.add(full)
-                                    page_added += 1
+                                # HTML页需满足最终HTML规则
+                                is_file_link = any(full.lower().endswith(ext) for ext in TARGET_FILE_TYPES)
+                                if (not is_file_link) and (not self._is_final_decision_html(full, title, city)):
+                                    pass
+                                else:
+                                    if full not in added:
+                                        reports.append({'title': title or href.split('/')[-1], 'url': full, 'from_public_section': True})
+                                        added.add(full)
+                                        page_added += 1
+                                        # 早停：命中 HTML 即可返回（文件直链不触发早停）
+                                        if not is_file_link:
+                                            return reports
 
                             # 2) 文件直链也必须满足关键字规则
                             if any(full.lower().endswith(ext) for ext in TARGET_FILE_TYPES):
@@ -717,15 +793,23 @@ class FinanceReportSpider:
                                         added.add(full)
                                         page_added += 1
 
-                        # 3) 控制拓展到下一层
+                        # 3) 控制拓展到下一层（优先拓展包含中层关键词的链接）
                         if depth < depth_limit:
+                            scored_next: List[tuple] = []
                             for a in links:
                                 href = a.get('href', '')
+                                title2 = a.get_text().strip()
                                 if not href:
                                     continue
                                 nxt = urljoin(current_url, href)
-                                if same_domain(base_url, nxt) and (nxt not in visited):
-                                    queue.append((nxt, depth + 1))
+                                if not same_domain(base_url, nxt) or (nxt in visited):
+                                    continue
+                                s = _keyword_score(f"{title2} {href}", mid_level_keywords)
+                                # 在没有明显关键词时也允许少量扩展
+                                scored_next.append((s, nxt))
+                            # 评分高的优先入队
+                            for s, nxt in sorted(scored_next, key=lambda x: x[0], reverse=True)[:200]:
+                                queue.append((nxt, depth + 1))
 
                         if page_added > 0:
                             logger.info(f"{city}: 暴力遍历在 {current_url} 捕获 {page_added} 个候选")
