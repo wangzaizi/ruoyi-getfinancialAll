@@ -1,0 +1,69 @@
+{
+  "gov": "https://www.fcgs.gov.cn",
+  "fin": "",
+  "urls": [
+    "https://www.fcgs.gov.cn/zfxxgk/",
+    "https://www.fcgs.gov.cn/zwgk/",
+    "https://www.fcgs.gov.cn/xxgk/",
+    "https://www.fcgs.gov.cn/gk/",
+    "https://www.fcgs.gov.cn/gsgg/",
+    "https://www.fcgs.gov.cn/zfxxgk/fdzdgknr/",
+    "https://www.fcgs.gov.cn/zwgk/fdzdgknr/",
+    "https://www.fcgs.gov.cn/xxgk/fdzdgknr/",
+    "https://www.fcgs.gov.cn/zfxxgk/zdlyxxgk/",
+    "https://www.fcgs.gov.cn/zwgk/zdlyxxgk/",
+    "https://www.fcgs.gov.cn/zdlyxxgk/",
+    "https://www.fcgs.gov.cn/czxxgk/",
+    "https://www.fcgs.gov.cn/czgk/",
+    "https://www.fcgs.gov.cn/czzx/",
+    "https://www.fcgs.gov.cn/cz/",
+    "https://www.fcgs.gov.cn/bmxxgk/czj/",
+    "https://www.fcgs.gov.cn/bmxxgk/",
+    "https://www.fcgs.gov.cn/bmxxgkml/czj/",
+    "https://www.fcgs.gov.cn/zdlyxxgk/czzj/",
+    "https://www.fcgs.gov.cn/zdlyxxgk/czxx/",
+    "https://www.fcgs.gov.cn/zdlyxxgk/czzjxxgk/",
+    "https://www.fcgs.gov.cn/ysjs/",
+    "https://www.fcgs.gov.cn/ys/",
+    "https://www.fcgs.gov.cn/js/",
+    "https://www.fcgs.gov.cn/ysqk/",
+    "https://www.fcgs.gov.cn/jsqk/",
+    "https://www.fcgs.gov.cn/ysjsgk/",
+    "https://www.fcgs.gov.cn/ysjsxx/",
+    "https://www.fcgs.gov.cn/ysxx/",
+    "https://www.fcgs.gov.cn/jsxx/",
+    "https://www.fcgs.gov.cn/caiwuyusuan/",
+    "https://www.fcgs.gov.cn/yusuan/",
+    "https://www.fcgs.gov.cn/yujuesuan/",
+    "https://www.fcgs.gov.cn/yusuanjuesuan/",
+    "https://www.fcgs.gov.cn/sangong/",
+    "https://www.fcgs.gov.cn/sgjf/",
+    "https://www.fcgs.gov.cn/czzj/sg/",
+    "https://www.fcgs.gov.cn/czj/"
+  ],
+  "filters": {
+    "year": 2024,
+    "must_include": [
+      "决算"
+    ],
+    "must_include_any": [
+      "本级",
+      "本市",
+      "防城港市"
+    ],
+    "exclude_any": [
+      "部门",
+      "单位",
+      "街道",
+      "镇",
+      "乡"
+    ],
+    "extra_keywords_any": [
+      "预算",
+      "财政预决算",
+      "政府预算决算公开",
+      "三公经费"
+    ]
+  },
+  "violent_fallback_enabled": false
+}

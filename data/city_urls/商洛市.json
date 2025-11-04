@@ -1,0 +1,69 @@
+{
+  "gov": "https://www.shangluo.gov.cn",
+  "fin": "",
+  "urls": [
+    "https://www.shangluo.gov.cn/zfxxgk/",
+    "https://www.shangluo.gov.cn/zwgk/",
+    "https://www.shangluo.gov.cn/xxgk/",
+    "https://www.shangluo.gov.cn/gk/",
+    "https://www.shangluo.gov.cn/gsgg/",
+    "https://www.shangluo.gov.cn/zfxxgk/fdzdgknr/",
+    "https://www.shangluo.gov.cn/zwgk/fdzdgknr/",
+    "https://www.shangluo.gov.cn/xxgk/fdzdgknr/",
+    "https://www.shangluo.gov.cn/zfxxgk/zdlyxxgk/",
+    "https://www.shangluo.gov.cn/zwgk/zdlyxxgk/",
+    "https://www.shangluo.gov.cn/zdlyxxgk/",
+    "https://www.shangluo.gov.cn/czxxgk/",
+    "https://www.shangluo.gov.cn/czgk/",
+    "https://www.shangluo.gov.cn/czzx/",
+    "https://www.shangluo.gov.cn/cz/",
+    "https://www.shangluo.gov.cn/bmxxgk/czj/",
+    "https://www.shangluo.gov.cn/bmxxgk/",
+    "https://www.shangluo.gov.cn/bmxxgkml/czj/",
+    "https://www.shangluo.gov.cn/zdlyxxgk/czzj/",
+    "https://www.shangluo.gov.cn/zdlyxxgk/czxx/",
+    "https://www.shangluo.gov.cn/zdlyxxgk/czzjxxgk/",
+    "https://www.shangluo.gov.cn/ysjs/",
+    "https://www.shangluo.gov.cn/ys/",
+    "https://www.shangluo.gov.cn/js/",
+    "https://www.shangluo.gov.cn/ysqk/",
+    "https://www.shangluo.gov.cn/jsqk/",
+    "https://www.shangluo.gov.cn/ysjsgk/",
+    "https://www.shangluo.gov.cn/ysjsxx/",
+    "https://www.shangluo.gov.cn/ysxx/",
+    "https://www.shangluo.gov.cn/jsxx/",
+    "https://www.shangluo.gov.cn/caiwuyusuan/",
+    "https://www.shangluo.gov.cn/yusuan/",
+    "https://www.shangluo.gov.cn/yujuesuan/",
+    "https://www.shangluo.gov.cn/yusuanjuesuan/",
+    "https://www.shangluo.gov.cn/sangong/",
+    "https://www.shangluo.gov.cn/sgjf/",
+    "https://www.shangluo.gov.cn/czzj/sg/",
+    "https://www.shangluo.gov.cn/czj/"
+  ],
+  "filters": {
+    "year": 2024,
+    "must_include": [
+      "决算"
+    ],
+    "must_include_any": [
+      "本级",
+      "本市",
+      "商洛市"
+    ],
+    "exclude_any": [
+      "部门",
+      "单位",
+      "街道",
+      "镇",
+      "乡"
+    ],
+    "extra_keywords_any": [
+      "预算",
+      "财政预决算",
+      "政府预算决算公开",
+      "三公经费"
+    ]
+  },
+  "violent_fallback_enabled": false
+}

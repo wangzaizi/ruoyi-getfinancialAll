@@ -1,0 +1,30 @@
+{
+  "gov": "",
+  "fin": "",
+  "urls": [],
+  "filters": {
+    "year": 2024,
+    "must_include": [
+      "决算"
+    ],
+    "must_include_any": [
+      "本级",
+      "本市",
+      "上饶市"
+    ],
+    "exclude_any": [
+      "部门",
+      "单位",
+      "街道",
+      "镇",
+      "乡"
+    ],
+    "extra_keywords_any": [
+      "预算",
+      "财政预决算",
+      "政府预算决算公开",
+      "三公经费"
+    ]
+  },
+  "violent_fallback_enabled": false
+}

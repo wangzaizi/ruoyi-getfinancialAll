@@ -1,0 +1,69 @@
+{
+  "gov": "http://www.heze.gov.cn",
+  "fin": "",
+  "urls": [
+    "http://www.heze.gov.cn/zfxxgk/",
+    "http://www.heze.gov.cn/zwgk/",
+    "http://www.heze.gov.cn/xxgk/",
+    "http://www.heze.gov.cn/gk/",
+    "http://www.heze.gov.cn/gsgg/",
+    "http://www.heze.gov.cn/zfxxgk/fdzdgknr/",
+    "http://www.heze.gov.cn/zwgk/fdzdgknr/",
+    "http://www.heze.gov.cn/xxgk/fdzdgknr/",
+    "http://www.heze.gov.cn/zfxxgk/zdlyxxgk/",
+    "http://www.heze.gov.cn/zwgk/zdlyxxgk/",
+    "http://www.heze.gov.cn/zdlyxxgk/",
+    "http://www.heze.gov.cn/czxxgk/",
+    "http://www.heze.gov.cn/czgk/",
+    "http://www.heze.gov.cn/czzx/",
+    "http://www.heze.gov.cn/cz/",
+    "http://www.heze.gov.cn/bmxxgk/czj/",
+    "http://www.heze.gov.cn/bmxxgk/",
+    "http://www.heze.gov.cn/bmxxgkml/czj/",
+    "http://www.heze.gov.cn/zdlyxxgk/czzj/",
+    "http://www.heze.gov.cn/zdlyxxgk/czxx/",
+    "http://www.heze.gov.cn/zdlyxxgk/czzjxxgk/",
+    "http://www.heze.gov.cn/ysjs/",
+    "http://www.heze.gov.cn/ys/",
+    "http://www.heze.gov.cn/js/",
+    "http://www.heze.gov.cn/ysqk/",
+    "http://www.heze.gov.cn/jsqk/",
+    "http://www.heze.gov.cn/ysjsgk/",
+    "http://www.heze.gov.cn/ysjsxx/",
+    "http://www.heze.gov.cn/ysxx/",
+    "http://www.heze.gov.cn/jsxx/",
+    "http://www.heze.gov.cn/caiwuyusuan/",
+    "http://www.heze.gov.cn/yusuan/",
+    "http://www.heze.gov.cn/yujuesuan/",
+    "http://www.heze.gov.cn/yusuanjuesuan/",
+    "http://www.heze.gov.cn/sangong/",
+    "http://www.heze.gov.cn/sgjf/",
+    "http://www.heze.gov.cn/czzj/sg/",
+    "http://www.heze.gov.cn/czj/"
+  ],
+  "filters": {
+    "year": 2024,
+    "must_include": [
+      "决算"
+    ],
+    "must_include_any": [
+      "本级",
+      "本市",
+      "菏泽市"
+    ],
+    "exclude_any": [
+      "部门",
+      "单位",
+      "街道",
+      "镇",
+      "乡"
+    ],
+    "extra_keywords_any": [
+      "预算",
+      "财政预决算",
+      "政府预算决算公开",
+      "三公经费"
+    ]
+  },
+  "violent_fallback_enabled": false
+}

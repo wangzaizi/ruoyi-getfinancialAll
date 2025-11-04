@@ -1,0 +1,69 @@
+{
+  "gov": "https://www.baoshan.gov.cn",
+  "fin": "",
+  "urls": [
+    "https://www.baoshan.gov.cn/zfxxgk/",
+    "https://www.baoshan.gov.cn/zwgk/",
+    "https://www.baoshan.gov.cn/xxgk/",
+    "https://www.baoshan.gov.cn/gk/",
+    "https://www.baoshan.gov.cn/gsgg/",
+    "https://www.baoshan.gov.cn/zfxxgk/fdzdgknr/",
+    "https://www.baoshan.gov.cn/zwgk/fdzdgknr/",
+    "https://www.baoshan.gov.cn/xxgk/fdzdgknr/",
+    "https://www.baoshan.gov.cn/zfxxgk/zdlyxxgk/",
+    "https://www.baoshan.gov.cn/zwgk/zdlyxxgk/",
+    "https://www.baoshan.gov.cn/zdlyxxgk/",
+    "https://www.baoshan.gov.cn/czxxgk/",
+    "https://www.baoshan.gov.cn/czgk/",
+    "https://www.baoshan.gov.cn/czzx/",
+    "https://www.baoshan.gov.cn/cz/",
+    "https://www.baoshan.gov.cn/bmxxgk/czj/",
+    "https://www.baoshan.gov.cn/bmxxgk/",
+    "https://www.baoshan.gov.cn/bmxxgkml/czj/",
+    "https://www.baoshan.gov.cn/zdlyxxgk/czzj/",
+    "https://www.baoshan.gov.cn/zdlyxxgk/czxx/",
+    "https://www.baoshan.gov.cn/zdlyxxgk/czzjxxgk/",
+    "https://www.baoshan.gov.cn/ysjs/",
+    "https://www.baoshan.gov.cn/ys/",
+    "https://www.baoshan.gov.cn/js/",
+    "https://www.baoshan.gov.cn/ysqk/",
+    "https://www.baoshan.gov.cn/jsqk/",
+    "https://www.baoshan.gov.cn/ysjsgk/",
+    "https://www.baoshan.gov.cn/ysjsxx/",
+    "https://www.baoshan.gov.cn/ysxx/",
+    "https://www.baoshan.gov.cn/jsxx/",
+    "https://www.baoshan.gov.cn/caiwuyusuan/",
+    "https://www.baoshan.gov.cn/yusuan/",
+    "https://www.baoshan.gov.cn/yujuesuan/",
+    "https://www.baoshan.gov.cn/yusuanjuesuan/",
+    "https://www.baoshan.gov.cn/sangong/",
+    "https://www.baoshan.gov.cn/sgjf/",
+    "https://www.baoshan.gov.cn/czzj/sg/",
+    "https://www.baoshan.gov.cn/czj/"
+  ],
+  "filters": {
+    "year": 2024,
+    "must_include": [
+      "决算"
+    ],
+    "must_include_any": [
+      "本级",
+      "本市",
+      "保山市"
+    ],
+    "exclude_any": [
+      "部门",
+      "单位",
+      "街道",
+      "镇",
+      "乡"
+    ],
+    "extra_keywords_any": [
+      "预算",
+      "财政预决算",
+      "政府预算决算公开",
+      "三公经费"
+    ]
+  },
+  "violent_fallback_enabled": false
+}

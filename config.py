@@ -18,18 +18,12 @@ CONCURRENT_REQUESTS = 5  # 并发请求数
 REQUEST_DELAY = 2  # 请求延迟（秒）
 TIMEOUT = 30  # 请求超时时间（秒）
 MAX_RETRIES = 3  # 最大重试次数
-MAX_WORKERS = max(4, (os.cpu_count() or 4))  # 线程池并发（用于多城市并行）
-SAVE_PROGRESS_EVERY = 1  # 每处理多少城市后落盘一次进度
 
 # 报告年份
 TARGET_YEAR = 2024
 
 # 搜索关键词
 SEARCH_KEYWORDS = [
-    "决算",
-    "决算",
-    "决算",
-    "决算",
     "决算",
     "预算"
 ]

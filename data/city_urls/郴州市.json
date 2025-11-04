@@ -1,0 +1,69 @@
+{
+  "gov": "https://www.czs.gov.cn",
+  "fin": "",
+  "urls": [
+    "https://www.czs.gov.cn/zfxxgk/",
+    "https://www.czs.gov.cn/zwgk/",
+    "https://www.czs.gov.cn/xxgk/",
+    "https://www.czs.gov.cn/gk/",
+    "https://www.czs.gov.cn/gsgg/",
+    "https://www.czs.gov.cn/zfxxgk/fdzdgknr/",
+    "https://www.czs.gov.cn/zwgk/fdzdgknr/",
+    "https://www.czs.gov.cn/xxgk/fdzdgknr/",
+    "https://www.czs.gov.cn/zfxxgk/zdlyxxgk/",
+    "https://www.czs.gov.cn/zwgk/zdlyxxgk/",
+    "https://www.czs.gov.cn/zdlyxxgk/",
+    "https://www.czs.gov.cn/czxxgk/",
+    "https://www.czs.gov.cn/czgk/",
+    "https://www.czs.gov.cn/czzx/",
+    "https://www.czs.gov.cn/cz/",
+    "https://www.czs.gov.cn/bmxxgk/czj/",
+    "https://www.czs.gov.cn/bmxxgk/",
+    "https://www.czs.gov.cn/bmxxgkml/czj/",
+    "https://www.czs.gov.cn/zdlyxxgk/czzj/",
+    "https://www.czs.gov.cn/zdlyxxgk/czxx/",
+    "https://www.czs.gov.cn/zdlyxxgk/czzjxxgk/",
+    "https://www.czs.gov.cn/ysjs/",
+    "https://www.czs.gov.cn/ys/",
+    "https://www.czs.gov.cn/js/",
+    "https://www.czs.gov.cn/ysqk/",
+    "https://www.czs.gov.cn/jsqk/",
+    "https://www.czs.gov.cn/ysjsgk/",
+    "https://www.czs.gov.cn/ysjsxx/",
+    "https://www.czs.gov.cn/ysxx/",
+    "https://www.czs.gov.cn/jsxx/",
+    "https://www.czs.gov.cn/caiwuyusuan/",
+    "https://www.czs.gov.cn/yusuan/",
+    "https://www.czs.gov.cn/yujuesuan/",
+    "https://www.czs.gov.cn/yusuanjuesuan/",
+    "https://www.czs.gov.cn/sangong/",
+    "https://www.czs.gov.cn/sgjf/",
+    "https://www.czs.gov.cn/czzj/sg/",
+    "https://www.czs.gov.cn/czj/"
+  ],
+  "filters": {
+    "year": 2024,
+    "must_include": [
+      "决算"
+    ],
+    "must_include_any": [
+      "本级",
+      "本市",
+      "郴州市"
+    ],
+    "exclude_any": [
+      "部门",
+      "单位",
+      "街道",
+      "镇",
+      "乡"
+    ],
+    "extra_keywords_any": [
+      "预算",
+      "财政预决算",
+      "政府预算决算公开",
+      "三公经费"
+    ]
+  },
+  "violent_fallback_enabled": false
+}

@@ -1,0 +1,69 @@
+{
+  "gov": "https://www.foshan.gov.cn",
+  "fin": "",
+  "urls": [
+    "https://www.foshan.gov.cn/zfxxgk/",
+    "https://www.foshan.gov.cn/zwgk/",
+    "https://www.foshan.gov.cn/xxgk/",
+    "https://www.foshan.gov.cn/gk/",
+    "https://www.foshan.gov.cn/gsgg/",
+    "https://www.foshan.gov.cn/zfxxgk/fdzdgknr/",
+    "https://www.foshan.gov.cn/zwgk/fdzdgknr/",
+    "https://www.foshan.gov.cn/xxgk/fdzdgknr/",
+    "https://www.foshan.gov.cn/zfxxgk/zdlyxxgk/",
+    "https://www.foshan.gov.cn/zwgk/zdlyxxgk/",
+    "https://www.foshan.gov.cn/zdlyxxgk/",
+    "https://www.foshan.gov.cn/czxxgk/",
+    "https://www.foshan.gov.cn/czgk/",
+    "https://www.foshan.gov.cn/czzx/",
+    "https://www.foshan.gov.cn/cz/",
+    "https://www.foshan.gov.cn/bmxxgk/czj/",
+    "https://www.foshan.gov.cn/bmxxgk/",
+    "https://www.foshan.gov.cn/bmxxgkml/czj/",
+    "https://www.foshan.gov.cn/zdlyxxgk/czzj/",
+    "https://www.foshan.gov.cn/zdlyxxgk/czxx/",
+    "https://www.foshan.gov.cn/zdlyxxgk/czzjxxgk/",
+    "https://www.foshan.gov.cn/ysjs/",
+    "https://www.foshan.gov.cn/ys/",
+    "https://www.foshan.gov.cn/js/",
+    "https://www.foshan.gov.cn/ysqk/",
+    "https://www.foshan.gov.cn/jsqk/",
+    "https://www.foshan.gov.cn/ysjsgk/",
+    "https://www.foshan.gov.cn/ysjsxx/",
+    "https://www.foshan.gov.cn/ysxx/",
+    "https://www.foshan.gov.cn/jsxx/",
+    "https://www.foshan.gov.cn/caiwuyusuan/",
+    "https://www.foshan.gov.cn/yusuan/",
+    "https://www.foshan.gov.cn/yujuesuan/",
+    "https://www.foshan.gov.cn/yusuanjuesuan/",
+    "https://www.foshan.gov.cn/sangong/",
+    "https://www.foshan.gov.cn/sgjf/",
+    "https://www.foshan.gov.cn/czzj/sg/",
+    "https://www.foshan.gov.cn/czj/"
+  ],
+  "filters": {
+    "year": 2024,
+    "must_include": [
+      "决算"
+    ],
+    "must_include_any": [
+      "本级",
+      "本市",
+      "佛山市"
+    ],
+    "exclude_any": [
+      "部门",
+      "单位",
+      "街道",
+      "镇",
+      "乡"
+    ],
+    "extra_keywords_any": [
+      "预算",
+      "财政预决算",
+      "政府预算决算公开",
+      "三公经费"
+    ]
+  },
+  "violent_fallback_enabled": false
+}

@@ -1,0 +1,69 @@
+{
+  "gov": "https://www.danzhou.gov.cn",
+  "fin": "",
+  "urls": [
+    "https://www.danzhou.gov.cn/zfxxgk/",
+    "https://www.danzhou.gov.cn/zwgk/",
+    "https://www.danzhou.gov.cn/xxgk/",
+    "https://www.danzhou.gov.cn/gk/",
+    "https://www.danzhou.gov.cn/gsgg/",
+    "https://www.danzhou.gov.cn/zfxxgk/fdzdgknr/",
+    "https://www.danzhou.gov.cn/zwgk/fdzdgknr/",
+    "https://www.danzhou.gov.cn/xxgk/fdzdgknr/",
+    "https://www.danzhou.gov.cn/zfxxgk/zdlyxxgk/",
+    "https://www.danzhou.gov.cn/zwgk/zdlyxxgk/",
+    "https://www.danzhou.gov.cn/zdlyxxgk/",
+    "https://www.danzhou.gov.cn/czxxgk/",
+    "https://www.danzhou.gov.cn/czgk/",
+    "https://www.danzhou.gov.cn/czzx/",
+    "https://www.danzhou.gov.cn/cz/",
+    "https://www.danzhou.gov.cn/bmxxgk/czj/",
+    "https://www.danzhou.gov.cn/bmxxgk/",
+    "https://www.danzhou.gov.cn/bmxxgkml/czj/",
+    "https://www.danzhou.gov.cn/zdlyxxgk/czzj/",
+    "https://www.danzhou.gov.cn/zdlyxxgk/czxx/",
+    "https://www.danzhou.gov.cn/zdlyxxgk/czzjxxgk/",
+    "https://www.danzhou.gov.cn/ysjs/",
+    "https://www.danzhou.gov.cn/ys/",
+    "https://www.danzhou.gov.cn/js/",
+    "https://www.danzhou.gov.cn/ysqk/",
+    "https://www.danzhou.gov.cn/jsqk/",
+    "https://www.danzhou.gov.cn/ysjsgk/",
+    "https://www.danzhou.gov.cn/ysjsxx/",
+    "https://www.danzhou.gov.cn/ysxx/",
+    "https://www.danzhou.gov.cn/jsxx/",
+    "https://www.danzhou.gov.cn/caiwuyusuan/",
+    "https://www.danzhou.gov.cn/yusuan/",
+    "https://www.danzhou.gov.cn/yujuesuan/",
+    "https://www.danzhou.gov.cn/yusuanjuesuan/",
+    "https://www.danzhou.gov.cn/sangong/",
+    "https://www.danzhou.gov.cn/sgjf/",
+    "https://www.danzhou.gov.cn/czzj/sg/",
+    "https://www.danzhou.gov.cn/czj/"
+  ],
+  "filters": {
+    "year": 2024,
+    "must_include": [
+      "决算"
+    ],
+    "must_include_any": [
+      "本级",
+      "本市",
+      "儋州市"
+    ],
+    "exclude_any": [
+      "部门",
+      "单位",
+      "街道",
+      "镇",
+      "乡"
+    ],
+    "extra_keywords_any": [
+      "预算",
+      "财政预决算",
+      "政府预算决算公开",
+      "三公经费"
+    ]
+  },
+  "violent_fallback_enabled": false
+}

@@ -1,0 +1,69 @@
+{
+  "gov": "http://www.hechi.gov.cn",
+  "fin": "",
+  "urls": [
+    "http://www.hechi.gov.cn/zfxxgk/",
+    "http://www.hechi.gov.cn/zwgk/",
+    "http://www.hechi.gov.cn/xxgk/",
+    "http://www.hechi.gov.cn/gk/",
+    "http://www.hechi.gov.cn/gsgg/",
+    "http://www.hechi.gov.cn/zfxxgk/fdzdgknr/",
+    "http://www.hechi.gov.cn/zwgk/fdzdgknr/",
+    "http://www.hechi.gov.cn/xxgk/fdzdgknr/",
+    "http://www.hechi.gov.cn/zfxxgk/zdlyxxgk/",
+    "http://www.hechi.gov.cn/zwgk/zdlyxxgk/",
+    "http://www.hechi.gov.cn/zdlyxxgk/",
+    "http://www.hechi.gov.cn/czxxgk/",
+    "http://www.hechi.gov.cn/czgk/",
+    "http://www.hechi.gov.cn/czzx/",
+    "http://www.hechi.gov.cn/cz/",
+    "http://www.hechi.gov.cn/bmxxgk/czj/",
+    "http://www.hechi.gov.cn/bmxxgk/",
+    "http://www.hechi.gov.cn/bmxxgkml/czj/",
+    "http://www.hechi.gov.cn/zdlyxxgk/czzj/",
+    "http://www.hechi.gov.cn/zdlyxxgk/czxx/",
+    "http://www.hechi.gov.cn/zdlyxxgk/czzjxxgk/",
+    "http://www.hechi.gov.cn/ysjs/",
+    "http://www.hechi.gov.cn/ys/",
+    "http://www.hechi.gov.cn/js/",
+    "http://www.hechi.gov.cn/ysqk/",
+    "http://www.hechi.gov.cn/jsqk/",
+    "http://www.hechi.gov.cn/ysjsgk/",
+    "http://www.hechi.gov.cn/ysjsxx/",
+    "http://www.hechi.gov.cn/ysxx/",
+    "http://www.hechi.gov.cn/jsxx/",
+    "http://www.hechi.gov.cn/caiwuyusuan/",
+    "http://www.hechi.gov.cn/yusuan/",
+    "http://www.hechi.gov.cn/yujuesuan/",
+    "http://www.hechi.gov.cn/yusuanjuesuan/",
+    "http://www.hechi.gov.cn/sangong/",
+    "http://www.hechi.gov.cn/sgjf/",
+    "http://www.hechi.gov.cn/czzj/sg/",
+    "http://www.hechi.gov.cn/czj/"
+  ],
+  "filters": {
+    "year": 2024,
+    "must_include": [
+      "决算"
+    ],
+    "must_include_any": [
+      "本级",
+      "本市",
+      "河池市"
+    ],
+    "exclude_any": [
+      "部门",
+      "单位",
+      "街道",
+      "镇",
+      "乡"
+    ],
+    "extra_keywords_any": [
+      "预算",
+      "财政预决算",
+      "政府预算决算公开",
+      "三公经费"
+    ]
+  },
+  "violent_fallback_enabled": false
+}

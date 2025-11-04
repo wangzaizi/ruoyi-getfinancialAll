@@ -1,0 +1,69 @@
+{
+  "gov": "https://www.nanyang.gov.cn",
+  "fin": "",
+  "urls": [
+    "https://www.nanyang.gov.cn/zfxxgk/",
+    "https://www.nanyang.gov.cn/zwgk/",
+    "https://www.nanyang.gov.cn/xxgk/",
+    "https://www.nanyang.gov.cn/gk/",
+    "https://www.nanyang.gov.cn/gsgg/",
+    "https://www.nanyang.gov.cn/zfxxgk/fdzdgknr/",
+    "https://www.nanyang.gov.cn/zwgk/fdzdgknr/",
+    "https://www.nanyang.gov.cn/xxgk/fdzdgknr/",
+    "https://www.nanyang.gov.cn/zfxxgk/zdlyxxgk/",
+    "https://www.nanyang.gov.cn/zwgk/zdlyxxgk/",
+    "https://www.nanyang.gov.cn/zdlyxxgk/",
+    "https://www.nanyang.gov.cn/czxxgk/",
+    "https://www.nanyang.gov.cn/czgk/",
+    "https://www.nanyang.gov.cn/czzx/",
+    "https://www.nanyang.gov.cn/cz/",
+    "https://www.nanyang.gov.cn/bmxxgk/czj/",
+    "https://www.nanyang.gov.cn/bmxxgk/",
+    "https://www.nanyang.gov.cn/bmxxgkml/czj/",
+    "https://www.nanyang.gov.cn/zdlyxxgk/czzj/",
+    "https://www.nanyang.gov.cn/zdlyxxgk/czxx/",
+    "https://www.nanyang.gov.cn/zdlyxxgk/czzjxxgk/",
+    "https://www.nanyang.gov.cn/ysjs/",
+    "https://www.nanyang.gov.cn/ys/",
+    "https://www.nanyang.gov.cn/js/",
+    "https://www.nanyang.gov.cn/ysqk/",
+    "https://www.nanyang.gov.cn/jsqk/",
+    "https://www.nanyang.gov.cn/ysjsgk/",
+    "https://www.nanyang.gov.cn/ysjsxx/",
+    "https://www.nanyang.gov.cn/ysxx/",
+    "https://www.nanyang.gov.cn/jsxx/",
+    "https://www.nanyang.gov.cn/caiwuyusuan/",
+    "https://www.nanyang.gov.cn/yusuan/",
+    "https://www.nanyang.gov.cn/yujuesuan/",
+    "https://www.nanyang.gov.cn/yusuanjuesuan/",
+    "https://www.nanyang.gov.cn/sangong/",
+    "https://www.nanyang.gov.cn/sgjf/",
+    "https://www.nanyang.gov.cn/czzj/sg/",
+    "https://www.nanyang.gov.cn/czj/"
+  ],
+  "filters": {
+    "year": 2024,
+    "must_include": [
+      "决算"
+    ],
+    "must_include_any": [
+      "本级",
+      "本市",
+      "南阳市"
+    ],
+    "exclude_any": [
+      "部门",
+      "单位",
+      "街道",
+      "镇",
+      "乡"
+    ],
+    "extra_keywords_any": [
+      "预算",
+      "财政预决算",
+      "政府预算决算公开",
+      "三公经费"
+    ]
+  },
+  "violent_fallback_enabled": false
+}

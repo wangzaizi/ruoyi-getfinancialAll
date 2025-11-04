@@ -1,0 +1,69 @@
+{
+  "gov": "http://www.heyuan.gov.cn",
+  "fin": "",
+  "urls": [
+    "http://www.heyuan.gov.cn/zfxxgk/",
+    "http://www.heyuan.gov.cn/zwgk/",
+    "http://www.heyuan.gov.cn/xxgk/",
+    "http://www.heyuan.gov.cn/gk/",
+    "http://www.heyuan.gov.cn/gsgg/",
+    "http://www.heyuan.gov.cn/zfxxgk/fdzdgknr/",
+    "http://www.heyuan.gov.cn/zwgk/fdzdgknr/",
+    "http://www.heyuan.gov.cn/xxgk/fdzdgknr/",
+    "http://www.heyuan.gov.cn/zfxxgk/zdlyxxgk/",
+    "http://www.heyuan.gov.cn/zwgk/zdlyxxgk/",
+    "http://www.heyuan.gov.cn/zdlyxxgk/",
+    "http://www.heyuan.gov.cn/czxxgk/",
+    "http://www.heyuan.gov.cn/czgk/",
+    "http://www.heyuan.gov.cn/czzx/",
+    "http://www.heyuan.gov.cn/cz/",
+    "http://www.heyuan.gov.cn/bmxxgk/czj/",
+    "http://www.heyuan.gov.cn/bmxxgk/",
+    "http://www.heyuan.gov.cn/bmxxgkml/czj/",
+    "http://www.heyuan.gov.cn/zdlyxxgk/czzj/",
+    "http://www.heyuan.gov.cn/zdlyxxgk/czxx/",
+    "http://www.heyuan.gov.cn/zdlyxxgk/czzjxxgk/",
+    "http://www.heyuan.gov.cn/ysjs/",
+    "http://www.heyuan.gov.cn/ys/",
+    "http://www.heyuan.gov.cn/js/",
+    "http://www.heyuan.gov.cn/ysqk/",
+    "http://www.heyuan.gov.cn/jsqk/",
+    "http://www.heyuan.gov.cn/ysjsgk/",
+    "http://www.heyuan.gov.cn/ysjsxx/",
+    "http://www.heyuan.gov.cn/ysxx/",
+    "http://www.heyuan.gov.cn/jsxx/",
+    "http://www.heyuan.gov.cn/caiwuyusuan/",
+    "http://www.heyuan.gov.cn/yusuan/",
+    "http://www.heyuan.gov.cn/yujuesuan/",
+    "http://www.heyuan.gov.cn/yusuanjuesuan/",
+    "http://www.heyuan.gov.cn/sangong/",
+    "http://www.heyuan.gov.cn/sgjf/",
+    "http://www.heyuan.gov.cn/czzj/sg/",
+    "http://www.heyuan.gov.cn/czj/"
+  ],
+  "filters": {
+    "year": 2024,
+    "must_include": [
+      "决算"
+    ],
+    "must_include_any": [
+      "本级",
+      "本市",
+      "河源市"
+    ],
+    "exclude_any": [
+      "部门",
+      "单位",
+      "街道",
+      "镇",
+      "乡"
+    ],
+    "extra_keywords_any": [
+      "预算",
+      "财政预决算",
+      "政府预算决算公开",
+      "三公经费"
+    ]
+  },
+  "violent_fallback_enabled": false
+}

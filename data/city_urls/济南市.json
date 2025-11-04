@@ -1,0 +1,69 @@
+{
+  "gov": "http://www.jinan.gov.cn",
+  "fin": "",
+  "urls": [
+    "http://www.jinan.gov.cn/zfxxgk/",
+    "http://www.jinan.gov.cn/zwgk/",
+    "http://www.jinan.gov.cn/xxgk/",
+    "http://www.jinan.gov.cn/gk/",
+    "http://www.jinan.gov.cn/gsgg/",
+    "http://www.jinan.gov.cn/zfxxgk/fdzdgknr/",
+    "http://www.jinan.gov.cn/zwgk/fdzdgknr/",
+    "http://www.jinan.gov.cn/xxgk/fdzdgknr/",
+    "http://www.jinan.gov.cn/zfxxgk/zdlyxxgk/",
+    "http://www.jinan.gov.cn/zwgk/zdlyxxgk/",
+    "http://www.jinan.gov.cn/zdlyxxgk/",
+    "http://www.jinan.gov.cn/czxxgk/",
+    "http://www.jinan.gov.cn/czgk/",
+    "http://www.jinan.gov.cn/czzx/",
+    "http://www.jinan.gov.cn/cz/",
+    "http://www.jinan.gov.cn/bmxxgk/czj/",
+    "http://www.jinan.gov.cn/bmxxgk/",
+    "http://www.jinan.gov.cn/bmxxgkml/czj/",
+    "http://www.jinan.gov.cn/zdlyxxgk/czzj/",
+    "http://www.jinan.gov.cn/zdlyxxgk/czxx/",
+    "http://www.jinan.gov.cn/zdlyxxgk/czzjxxgk/",
+    "http://www.jinan.gov.cn/ysjs/",
+    "http://www.jinan.gov.cn/ys/",
+    "http://www.jinan.gov.cn/js/",
+    "http://www.jinan.gov.cn/ysqk/",
+    "http://www.jinan.gov.cn/jsqk/",
+    "http://www.jinan.gov.cn/ysjsgk/",
+    "http://www.jinan.gov.cn/ysjsxx/",
+    "http://www.jinan.gov.cn/ysxx/",
+    "http://www.jinan.gov.cn/jsxx/",
+    "http://www.jinan.gov.cn/caiwuyusuan/",
+    "http://www.jinan.gov.cn/yusuan/",
+    "http://www.jinan.gov.cn/yujuesuan/",
+    "http://www.jinan.gov.cn/yusuanjuesuan/",
+    "http://www.jinan.gov.cn/sangong/",
+    "http://www.jinan.gov.cn/sgjf/",
+    "http://www.jinan.gov.cn/czzj/sg/",
+    "http://www.jinan.gov.cn/czj/"
+  ],
+  "filters": {
+    "year": 2024,
+    "must_include": [
+      "决算"
+    ],
+    "must_include_any": [
+      "本级",
+      "本市",
+      "济南市"
+    ],
+    "exclude_any": [
+      "部门",
+      "单位",
+      "街道",
+      "镇",
+      "乡"
+    ],
+    "extra_keywords_any": [
+      "预算",
+      "财政预决算",
+      "政府预算决算公开",
+      "三公经费"
+    ]
+  },
+  "violent_fallback_enabled": false
+}

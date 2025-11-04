@@ -84,13 +84,57 @@ class FinanceReportSpider:
                     f"https://{city_pinyin_full}.gov.cn",
                     f"http://www.{city_pinyin_full}.gov.cn",
                     f"http://{city_pinyin_full}.gov.cn",
+                    f"https://www.{city_pinyin_first}.gov.cn",  # 如 https://www.sm.gov.cn（三明市人民政府）
+                    f"https://{city_pinyin_first}.gov.cn",
+                    f"http://www.{city_pinyin_first}.gov.cn",
+                    f"http://{city_pinyin_first}.gov.cn",
+                    f"https://www.{city_pinyin_first}s.gov.cn",  # 如 https://www.jcs.gov.cn（金昌市人民政府，缩写+市的首字母）
+                    f"https://{city_pinyin_first}s.gov.cn",
+                    f"http://www.{city_pinyin_first}s.gov.cn",
+                    f"http://{city_pinyin_first}s.gov.cn",
                 ]
+
+                # 省缩写前缀 + 城市全拼/缩写（如 hnloudi.gov.cn / hnsz.gov.cn），尝试常见省前缀
+                province_prefixes = ['bj','tj','sh','cq','he','hb','sx','nm','nmg','ln','jl','hlj','js','zj','ah','fj','jx','sd','ha','hen','hn','gd','gx','hi','sc','gz','yn','xz','sn','gs','qh','nx','xj']
+                for prov in province_prefixes:
+                    candidates_gov.extend([
+                        f"https://{prov}{city_pinyin_full}.gov.cn",
+                        f"http://{prov}{city_pinyin_full}.gov.cn",
+                        f"https://www.{prov}{city_pinyin_full}.gov.cn",
+                        f"http://www.{prov}{city_pinyin_full}.gov.cn",
+                        f"https://{prov}{city_pinyin_first}.gov.cn",
+                        f"http://{prov}{city_pinyin_first}.gov.cn",
+                        f"https://www.{prov}{city_pinyin_first}.gov.cn",
+                        f"http://www.{prov}{city_pinyin_first}.gov.cn",
+                    ])
                 candidates_fin = [
                     f"https://czj.{city_pinyin_full}.gov.cn",
+                    f"https://czj.{city_pinyin_first}.gov.cn",
                     f"https://czt.{city_pinyin_full}.gov.cn",
+                    f"https://cz.{city_pinyin_full}.gov.cn",  # 如 cz.sanming.gov.cn
+                    f"https://cz.{city_pinyin_first}.gov.cn",  # 如 cz.sm.gov.cn（三明市财政局）
+                    f"http://cz.{city_pinyin_full}.gov.cn",
+                    f"http://cz.{city_pinyin_first}.gov.cn",
+                    f"https://mof.{city_pinyin_full}.gov.cn",  # 如 https://mof.sanya.gov.cn（三亚市财政局，mof=Ministry of Finance）
+                    f"https://mof.{city_pinyin_first}.gov.cn",
+                    f"http://mof.{city_pinyin_full}.gov.cn",
+                    f"http://mof.{city_pinyin_first}.gov.cn",
                     f"https://{city_pinyin_first}fb.{city_pinyin_first}.gov.cn",  # 如 szfb.sz.gov.cn
                     f"https://{city_pinyin_full}cz.gov.cn",
                 ]
+
+                # 省缩写前缀 + 财政局（如 czj.hnloudi.gov.cn / czj.hnsz.gov.cn）
+                for prov in province_prefixes:
+                    candidates_fin.extend([
+                        f"https://czj.{prov}{city_pinyin_full}.gov.cn",
+                        f"http://czj.{prov}{city_pinyin_full}.gov.cn",
+                        f"https://mof.{prov}{city_pinyin_full}.gov.cn",
+                        f"http://mof.{prov}{city_pinyin_full}.gov.cn",
+                        f"https://czj.{prov}{city_pinyin_first}.gov.cn",
+                        f"http://czj.{prov}{city_pinyin_first}.gov.cn",
+                        f"https://mof.{prov}{city_pinyin_first}.gov.cn",
+                        f"http://mof.{prov}{city_pinyin_first}.gov.cn",
+                    ])
 
                 def first_alive(urls):
                     for u in urls:
@@ -554,7 +598,7 @@ class FinanceReportSpider:
 
         return reports
 
-    def search_finance_reports(self, base_url: str, city: str) -> List[Dict]:
+    def search_finance_reports(self, base_url: str, city: str, violent_fallback: bool = True) -> List[Dict]:
         """
         搜索财政报告链接：不依赖固定路径，先在站点内检索“公开/政务公开/财政公开”等栏目，
         再在这些栏目页内按 决算+目标年份+层级（本级/本市/城市名）过滤，完整遍历列表分页。
@@ -625,8 +669,8 @@ class FinanceReportSpider:
                 except Exception as ex:
                     logger.debug(f"解析栏目失败 {start_url}: {ex}")
 
-            # 若仍未找到则对公开类栏目做有限深度的暴力遍历
-            if not reports and candidate_section_urls:
+            # 若仍未找到且允许，则对公开类栏目做有限深度的暴力遍历
+            if violent_fallback and (not reports) and candidate_section_urls:
                 logger.info(f"{city}: 站内检索仍未命中，开始对公开栏目暴力遍历（有限深度）…")
                 from collections import deque
                 queue = deque()

@@ -1,0 +1,69 @@
+{
+  "gov": "http://www.bc.gov.cn",
+  "fin": "",
+  "urls": [
+    "http://www.bc.gov.cn/zfxxgk/",
+    "http://www.bc.gov.cn/zwgk/",
+    "http://www.bc.gov.cn/xxgk/",
+    "http://www.bc.gov.cn/gk/",
+    "http://www.bc.gov.cn/gsgg/",
+    "http://www.bc.gov.cn/zfxxgk/fdzdgknr/",
+    "http://www.bc.gov.cn/zwgk/fdzdgknr/",
+    "http://www.bc.gov.cn/xxgk/fdzdgknr/",
+    "http://www.bc.gov.cn/zfxxgk/zdlyxxgk/",
+    "http://www.bc.gov.cn/zwgk/zdlyxxgk/",
+    "http://www.bc.gov.cn/zdlyxxgk/",
+    "http://www.bc.gov.cn/czxxgk/",
+    "http://www.bc.gov.cn/czgk/",
+    "http://www.bc.gov.cn/czzx/",
+    "http://www.bc.gov.cn/cz/",
+    "http://www.bc.gov.cn/bmxxgk/czj/",
+    "http://www.bc.gov.cn/bmxxgk/",
+    "http://www.bc.gov.cn/bmxxgkml/czj/",
+    "http://www.bc.gov.cn/zdlyxxgk/czzj/",
+    "http://www.bc.gov.cn/zdlyxxgk/czxx/",
+    "http://www.bc.gov.cn/zdlyxxgk/czzjxxgk/",
+    "http://www.bc.gov.cn/ysjs/",
+    "http://www.bc.gov.cn/ys/",
+    "http://www.bc.gov.cn/js/",
+    "http://www.bc.gov.cn/ysqk/",
+    "http://www.bc.gov.cn/jsqk/",
+    "http://www.bc.gov.cn/ysjsgk/",
+    "http://www.bc.gov.cn/ysjsxx/",
+    "http://www.bc.gov.cn/ysxx/",
+    "http://www.bc.gov.cn/jsxx/",
+    "http://www.bc.gov.cn/caiwuyusuan/",
+    "http://www.bc.gov.cn/yusuan/",
+    "http://www.bc.gov.cn/yujuesuan/",
+    "http://www.bc.gov.cn/yusuanjuesuan/",
+    "http://www.bc.gov.cn/sangong/",
+    "http://www.bc.gov.cn/sgjf/",
+    "http://www.bc.gov.cn/czzj/sg/",
+    "http://www.bc.gov.cn/czj/"
+  ],
+  "filters": {
+    "year": 2024,
+    "must_include": [
+      "决算"
+    ],
+    "must_include_any": [
+      "本级",
+      "本市",
+      "白城市"
+    ],
+    "exclude_any": [
+      "部门",
+      "单位",
+      "街道",
+      "镇",
+      "乡"
+    ],
+    "extra_keywords_any": [
+      "预算",
+      "财政预决算",
+      "政府预算决算公开",
+      "三公经费"
+    ]
+  },
+  "violent_fallback_enabled": false
+}

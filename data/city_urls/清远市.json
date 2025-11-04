@@ -1,0 +1,69 @@
+{
+  "gov": "http://www.qingyuan.gov.cn",
+  "fin": "",
+  "urls": [
+    "http://www.qingyuan.gov.cn/zfxxgk/",
+    "http://www.qingyuan.gov.cn/zwgk/",
+    "http://www.qingyuan.gov.cn/xxgk/",
+    "http://www.qingyuan.gov.cn/gk/",
+    "http://www.qingyuan.gov.cn/gsgg/",
+    "http://www.qingyuan.gov.cn/zfxxgk/fdzdgknr/",
+    "http://www.qingyuan.gov.cn/zwgk/fdzdgknr/",
+    "http://www.qingyuan.gov.cn/xxgk/fdzdgknr/",
+    "http://www.qingyuan.gov.cn/zfxxgk/zdlyxxgk/",
+    "http://www.qingyuan.gov.cn/zwgk/zdlyxxgk/",
+    "http://www.qingyuan.gov.cn/zdlyxxgk/",
+    "http://www.qingyuan.gov.cn/czxxgk/",
+    "http://www.qingyuan.gov.cn/czgk/",
+    "http://www.qingyuan.gov.cn/czzx/",
+    "http://www.qingyuan.gov.cn/cz/",
+    "http://www.qingyuan.gov.cn/bmxxgk/czj/",
+    "http://www.qingyuan.gov.cn/bmxxgk/",
+    "http://www.qingyuan.gov.cn/bmxxgkml/czj/",
+    "http://www.qingyuan.gov.cn/zdlyxxgk/czzj/",
+    "http://www.qingyuan.gov.cn/zdlyxxgk/czxx/",
+    "http://www.qingyuan.gov.cn/zdlyxxgk/czzjxxgk/",
+    "http://www.qingyuan.gov.cn/ysjs/",
+    "http://www.qingyuan.gov.cn/ys/",
+    "http://www.qingyuan.gov.cn/js/",
+    "http://www.qingyuan.gov.cn/ysqk/",
+    "http://www.qingyuan.gov.cn/jsqk/",
+    "http://www.qingyuan.gov.cn/ysjsgk/",
+    "http://www.qingyuan.gov.cn/ysjsxx/",
+    "http://www.qingyuan.gov.cn/ysxx/",
+    "http://www.qingyuan.gov.cn/jsxx/",
+    "http://www.qingyuan.gov.cn/caiwuyusuan/",
+    "http://www.qingyuan.gov.cn/yusuan/",
+    "http://www.qingyuan.gov.cn/yujuesuan/",
+    "http://www.qingyuan.gov.cn/yusuanjuesuan/",
+    "http://www.qingyuan.gov.cn/sangong/",
+    "http://www.qingyuan.gov.cn/sgjf/",
+    "http://www.qingyuan.gov.cn/czzj/sg/",
+    "http://www.qingyuan.gov.cn/czj/"
+  ],
+  "filters": {
+    "year": 2024,
+    "must_include": [
+      "决算"
+    ],
+    "must_include_any": [
+      "本级",
+      "本市",
+      "清远市"
+    ],
+    "exclude_any": [
+      "部门",
+      "单位",
+      "街道",
+      "镇",
+      "乡"
+    ],
+    "extra_keywords_any": [
+      "预算",
+      "财政预决算",
+      "政府预算决算公开",
+      "三公经费"
+    ]
+  },
+  "violent_fallback_enabled": false
+}

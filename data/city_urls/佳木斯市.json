@@ -1,0 +1,69 @@
+{
+  "gov": "https://www.jms.gov.cn",
+  "fin": "",
+  "urls": [
+    "https://www.jms.gov.cn/zfxxgk/",
+    "https://www.jms.gov.cn/zwgk/",
+    "https://www.jms.gov.cn/xxgk/",
+    "https://www.jms.gov.cn/gk/",
+    "https://www.jms.gov.cn/gsgg/",
+    "https://www.jms.gov.cn/zfxxgk/fdzdgknr/",
+    "https://www.jms.gov.cn/zwgk/fdzdgknr/",
+    "https://www.jms.gov.cn/xxgk/fdzdgknr/",
+    "https://www.jms.gov.cn/zfxxgk/zdlyxxgk/",
+    "https://www.jms.gov.cn/zwgk/zdlyxxgk/",
+    "https://www.jms.gov.cn/zdlyxxgk/",
+    "https://www.jms.gov.cn/czxxgk/",
+    "https://www.jms.gov.cn/czgk/",
+    "https://www.jms.gov.cn/czzx/",
+    "https://www.jms.gov.cn/cz/",
+    "https://www.jms.gov.cn/bmxxgk/czj/",
+    "https://www.jms.gov.cn/bmxxgk/",
+    "https://www.jms.gov.cn/bmxxgkml/czj/",
+    "https://www.jms.gov.cn/zdlyxxgk/czzj/",
+    "https://www.jms.gov.cn/zdlyxxgk/czxx/",
+    "https://www.jms.gov.cn/zdlyxxgk/czzjxxgk/",
+    "https://www.jms.gov.cn/ysjs/",
+    "https://www.jms.gov.cn/ys/",
+    "https://www.jms.gov.cn/js/",
+    "https://www.jms.gov.cn/ysqk/",
+    "https://www.jms.gov.cn/jsqk/",
+    "https://www.jms.gov.cn/ysjsgk/",
+    "https://www.jms.gov.cn/ysjsxx/",
+    "https://www.jms.gov.cn/ysxx/",
+    "https://www.jms.gov.cn/jsxx/",
+    "https://www.jms.gov.cn/caiwuyusuan/",
+    "https://www.jms.gov.cn/yusuan/",
+    "https://www.jms.gov.cn/yujuesuan/",
+    "https://www.jms.gov.cn/yusuanjuesuan/",
+    "https://www.jms.gov.cn/sangong/",
+    "https://www.jms.gov.cn/sgjf/",
+    "https://www.jms.gov.cn/czzj/sg/",
+    "https://www.jms.gov.cn/czj/"
+  ],
+  "filters": {
+    "year": 2024,
+    "must_include": [
+      "决算"
+    ],
+    "must_include_any": [
+      "本级",
+      "本市",
+      "佳木斯市"
+    ],
+    "exclude_any": [
+      "部门",
+      "单位",
+      "街道",
+      "镇",
+      "乡"
+    ],
+    "extra_keywords_any": [
+      "预算",
+      "财政预决算",
+      "政府预算决算公开",
+      "三公经费"
+    ]
+  },
+  "violent_fallback_enabled": false
+}
