@@ -348,8 +348,9 @@ class FinanceReportSpider:
 
         context_text = title or ''
         # 先用元素文本判断
-        from config import TARGET_YEARS
-        if (any(str(y) in context_text for y in TARGET_YEARS)) and ('决算' in context_text) and self._contains_level_markers(city, context_text):
+        from config import TARGET_YEARS 
+        from config import NO_TARGET_YEARS
+        if ( (all(str(y) not in context_text for y in NO_TARGET_YEARS)) and  any(str(y) in context_text for y in TARGET_YEARS)) and ('决算' in context_text) and self._contains_level_markers(city, context_text):
             return True
 
         # 再尝试抓取目标页标题增强判断
@@ -363,7 +364,8 @@ class FinanceReportSpider:
                 h1_text = h1.get_text().strip() if h1 else ''
                 combined = f"{page_title} {h1_text}"
                 from config import TARGET_YEARS
-                if (any(str(y) in combined for y in TARGET_YEARS)) and ('决算' in combined) and self._contains_level_markers(city, combined):
+                from config import NO_TARGET_YEARS
+                if ((all(str(y) not in combined for y in TARGET_YEARS)) and any(str(y) in combined for y in TARGET_YEARS)) and ('决算' in combined) and self._contains_level_markers(city, combined):
                     return True
         except Exception:
             pass
