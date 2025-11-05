@@ -1,7 +1,8 @@
 """
 按城市使用公开栏目检索，基于 gov/fin 根域查找符合条件的公开链接：
+- 数据源：从 generated_site_mappings_result.py 的 CITY_SITE_SOURCES_WITH_URLS 获取所有城市的 gov/fin 网站地址
 - 读取现有的 results.json，只对 success: false 的城市重新爬取
-- 使用暴力遍历模式（violent_fallback=True）进行深度搜索
+- 使用公开栏目检索方法（violent_fallback=False，不使用暴力遍历）
 - 更新原文件，保留 success: true 的城市不变
 """
 
@@ -14,6 +15,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from config import DATA_DIR
 from spider import FinanceReportSpider
+# 数据源：从 generated_site_mappings_result.py 获取所有城市的 gov/fin 网站地址
 from generated_site_mappings_result import CITY_SITE_SOURCES_WITH_URLS
 
 
@@ -48,6 +50,7 @@ def crawl_city(city: str, gov: str, fin: str, use_violent_fallback: bool = True)
         "gov": gov,
         "fin": fin,
         "urls": urls_collected,
+        "downloaded_files": "",
         "success": len(urls_collected) > 0,
     }
 
@@ -79,6 +82,7 @@ def main():
                 existing_items_by_city[city] = item
 
     # 确定需要重新爬取的城市（只处理 success: false 的）
+    # 数据源：CITY_SITE_SOURCES_WITH_URLS 包含所有城市的 gov/fin 网站地址
     cities_to_retry = []
     if existing_items_by_city:
         for city, payload in CITY_SITE_SOURCES_WITH_URLS.items():
@@ -86,10 +90,10 @@ def main():
             if existing_item and existing_item.get("success") is True:
                 # 成功的城市跳过，保留原结果
                 continue
-            # 失败的城市或新城市需要处理
+            # 失败的城市或新城市需要处理，从 CITY_SITE_SOURCES_WITH_URLS 获取 gov/fin
             cities_to_retry.append(city)
     else:
-        # 如果没有现有结果，处理所有城市
+        # 如果没有现有结果，处理所有城市（从 CITY_SITE_SOURCES_WITH_URLS 获取）
         cities_to_retry = list(CITY_SITE_SOURCES_WITH_URLS.keys())
 
     if not cities_to_retry:
@@ -110,10 +114,15 @@ def main():
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
         futures = {}
         for city in cities_to_retry:
+            # 从 CITY_SITE_SOURCES_WITH_URLS 获取该城市的 gov/fin 网站地址
             payload = CITY_SITE_SOURCES_WITH_URLS.get(city, {})
             gov = (payload.get("gov") or "").strip()
             fin = (payload.get("fin") or "").strip()
-            fut = executor.submit(crawl_city, city, gov, fin, use_violent_fallback=True)
+            if not gov and not fin:
+                # 如果 gov 和 fin 都为空（如和田地区），跳过
+                print(f"警告: {city}: gov 和 fin 均为空，跳过")
+                continue
+            fut = executor.submit(crawl_city, city, gov, fin, use_violent_fallback=False)
             futures[fut] = city
 
         for fut in as_completed(futures):

@@ -115,11 +115,16 @@ if __name__ == "__main__":
 """
 城市站点映射（自动生成）。若有错误请手动修正。
 
+注意：此处的 CITY_SITE_OVERRIDES 仅作为参考，实际使用的是从 generated_site_mappings202511041549.py 导入的 BASE_MAPPINGS。
+实际运行时 CITY_SITE_SOURCES_WITH_URLS 是基于 BASE_MAPPINGS 生成的。
+
 CITY_SITE_OVERRIDES = {
     "城市名": {"gov": "市政府根域", "fin": "财政局根域"}
 }
 """
 
+# 注意：此字典仅作为参考，实际使用的是导入的 BASE_MAPPINGS
+# 如果需要修改数据，请更新 generated_site_mappings202511041549.py 文件
 CITY_SITE_OVERRIDES = {
     "七台河市": {"gov": "https://www.qth.gov.cn", "fin": ""},
     "三亚市": {"gov": "https://www.sanya.gov.cn", "fin": "https://mof.sanya.gov.cn"},
@@ -351,7 +356,7 @@ CITY_SITE_OVERRIDES = {
     "白银市": {"gov": "https://www.baiyin.gov.cn", "fin": ""},
     "百色市": {"gov": "http://www.baise.gov.cn", "fin": "http://czj.baise.gov.cn"},
     "益阳市": {"gov": "https://www.yiyang.gov.cn", "fin": ""},
-    "盐城市": {"gov": "https://www.ycs.gov.cn", "fin": "https://czj.yancheng.gov.cn"},
+    "盐城市": {"gov": "https://www.yancheng.gov.cn", "fin": "https://czj.yancheng.gov.cn"},
     "盘锦市": {"gov": "https://www.panjin.gov.cn", "fin": "https://czj.panjin.gov.cn"},
     "眉山市": {"gov": "https://www.ms.gov.cn", "fin": ""},
     "石嘴山市": {"gov": "https://www.shizuishan.gov.cn", "fin": ""},

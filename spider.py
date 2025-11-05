@@ -4,9 +4,11 @@
 import os
 import time
 import logging
+import os
+from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
-from urllib.parse import urljoin, urlparse, quote, parse_qsl, urlunparse
+from urllib.parse import urljoin, urlparse, quote, parse_qsl, urlunparse, urlencode
 from pathlib import Path
 import re
 from typing import List, Dict, Optional
@@ -30,11 +32,30 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+def _setup_file_logger_once() -> None:
+    if getattr(_setup_file_logger_once, "_configured", False):
+        return
+    log_dir = os.path.join(os.getcwd(), "logs")
+    try:
+        os.makedirs(log_dir, exist_ok=True)
+    except Exception:
+        pass
+    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+    log_path = os.path.join(log_dir, f"spider_{ts}.log")
+    handler = logging.FileHandler(log_path, encoding="utf-8")
+    fmt = logging.Formatter("%(asctime)s %(levelname)s %(message)s")
+    handler.setFormatter(fmt)
+    root = logging.getLogger()
+    root.setLevel(logging.INFO)
+    root.addHandler(handler)
+    _setup_file_logger_once._configured = True
+
 
 class FinanceReportSpider:
     """财政报告爬虫"""
     
     def __init__(self):
+        _setup_file_logger_once()
         self.session = requests.Session()
         self.session.headers.update(HEADERS)
         self.downloaded = {}  # 记录已下载的文件
@@ -286,10 +307,9 @@ class FinanceReportSpider:
         if not text:
             return False
 
-        year = str(TARGET_YEAR)
-        
-        # 检查是否包含年份
-        if year not in text:
+        # 检查是否包含任一目标年份
+        from config import TARGET_YEARS
+        if not any(str(y) in text for y in TARGET_YEARS):
             return False
         
         # 检查是否包含城市名或“本级”
@@ -328,7 +348,8 @@ class FinanceReportSpider:
 
         context_text = title or ''
         # 先用元素文本判断
-        if (str(TARGET_YEAR) in context_text) and ('决算' in context_text) and self._contains_level_markers(city, context_text):
+        from config import TARGET_YEARS
+        if (any(str(y) in context_text for y in TARGET_YEARS)) and ('决算' in context_text) and self._contains_level_markers(city, context_text):
             return True
 
         # 再尝试抓取目标页标题增强判断
@@ -341,7 +362,8 @@ class FinanceReportSpider:
                 h1 = soup.find('h1')
                 h1_text = h1.get_text().strip() if h1 else ''
                 combined = f"{page_title} {h1_text}"
-                if (str(TARGET_YEAR) in combined) and ('决算' in combined) and self._contains_level_markers(city, combined):
+                from config import TARGET_YEARS
+                if (any(str(y) in combined for y in TARGET_YEARS)) and ('决算' in combined) and self._contains_level_markers(city, combined):
                     return True
         except Exception:
             pass
@@ -354,13 +376,13 @@ class FinanceReportSpider:
         返回下一页URL，如果没有则返回None
         """
         try:
-            # 查找包含"下一页"、"下页"、"next"等关键词的链接
+            # 查找包含"下一页"、"下页"、"next"等关键词的链接（忽略 javascript 链接）
             # 方法1: 通过文本内容查找
             text_pattern = re.compile(r'(下一页|下页|next|more)', re.I)
             text_links = soup.find_all('a', href=True, string=text_pattern)
             for link in text_links:
                 href = link.get('href', '')
-                if href:
+                if href and not href.lower().startswith('javascript') and href != '#':
                     full_url = urljoin(page_url, href)
                     if full_url != page_url:
                         return full_url
@@ -369,7 +391,7 @@ class FinanceReportSpider:
             class_links = soup.find_all('a', class_=re.compile(r'(next|page-next)', re.I), href=True)
             for link in class_links:
                 href = link.get('href', '')
-                if href:
+                if href and not href.lower().startswith('javascript') and href != '#':
                     full_url = urljoin(page_url, href)
                     if full_url != page_url:
                         return full_url
@@ -378,12 +400,30 @@ class FinanceReportSpider:
             id_links = soup.find_all('a', id=re.compile(r'(next|page-next)', re.I), href=True)
             for link in id_links:
                 href = link.get('href', '')
-                if href:
+                if href and not href.lower().startswith('javascript') and href != '#':
                     full_url = urljoin(page_url, href)
                     if full_url != page_url:
                         return full_url
+
+            # 方法4: 处理 onclick 或 data-* 中的页码（如 goPage(2)）
+            onclick_links = soup.find_all('a', onclick=re.compile(r'(goPage|turnPage|toPage)\s*\(\s*(\d+)\s*\)', re.I))
+            for link in onclick_links:
+                m = re.search(r'(goPage|turnPage|toPage)\s*\(\s*(\d+)\s*\)', link.get('onclick',''))
+                if not m:
+                    continue
+                next_num = m.group(2)
+                # 尝试基于现有 URL 参数推断
+                url_parts = list(urlparse(page_url))
+                query_params = dict(parse_qsl(url_parts[4]))
+                for pn in ['pageNum','page','p','pn','currentPage','pageIndex']:
+                    if pn in query_params:
+                        query_params[pn] = next_num
+                        url_parts[4] = urlencode(query_params)
+                        candidate = urlunparse(url_parts)
+                        if candidate != page_url:
+                            return candidate
             
-            # 查找页码链接（查找比当前页更大的页码）
+            # 查找页码链接（查找比当前页更大的页码），忽略 javascript 链接
             page_links = soup.find_all('a', href=True, string=re.compile(r'^\d+$'))
             current_page_num = None
             
@@ -399,7 +439,7 @@ class FinanceReportSpider:
                         page_num = int(page_text)
                         if page_num > current_page_num:
                             href = link.get('href', '')
-                            if href:
+                            if href and not href.lower().startswith('javascript') and href != '#':
                                 return urljoin(page_url, href)
                     except:
                         continue
@@ -437,7 +477,7 @@ class FinanceReportSpider:
         all_reports = []
         processed_pages = set()  # 用于避免重复处理同一页面
         current_page_url = start_url
-        max_pages = 100  # 防止无限循环，最多遍历100页
+        max_pages = 10  # 防止无限循环，最多遍历10页
         
         try:
             page_count = 0
@@ -450,7 +490,25 @@ class FinanceReportSpider:
                 page_count += 1
                 logger.info(f"解析页面 {page_count}: {current_page_url}")
                 
-                response = self.session.get(current_page_url, timeout=TIMEOUT)
+                try:
+                    response = self.session.get(current_page_url, timeout=TIMEOUT)
+                except requests.RequestException as ex:
+                    # SSL/代理错误时尝试 http 回退
+                    logger.warning(f"请求失败，尝试协议回退: {current_page_url}, err={ex}")
+                    try:
+                        parsed = urlparse(current_page_url)
+                        if parsed.scheme == 'https':
+                            fallback = urlunparse(('http', parsed.netloc, parsed.path, parsed.params, parsed.query, parsed.fragment))
+                            response = self.session.get(fallback, timeout=TIMEOUT)
+                            if response.status_code == 200:
+                                current_page_url = fallback
+                            else:
+                                logger.warning(f"HTTP 回退仍失败: {fallback} code={response.status_code}")
+                                break
+                        else:
+                            raise
+                    except Exception:
+                        break
                 if response.status_code != 200:
                     logger.warning(f"无法访问页面 {current_page_url}，状态码: {response.status_code}")
                     break
@@ -560,46 +618,57 @@ class FinanceReportSpider:
                     continue
 
                 for kw in keywords:
-                    params = dict(form_fields)
-                    params[search_param] = kw
+                    base_params = dict(form_fields)
+                    base_params[search_param] = kw
 
-                    # 如表单包含时间或年份字段，则尽量约束到目标年份
+                    # 如表单包含时间或年份字段，则尽量约束到目标年份集合
                     try:
                         # 常见时间字段名
                         start_keys = ['startTime', 'start_time', 'stime', 'startDate', 'start_date', 'from', 'fromDate']
                         end_keys = ['endTime', 'end_time', 'etime', 'endDate', 'end_date', 'to', 'toDate']
                         year_keys = ['year', 'yearStr', 'time', 'sj']
 
-                        start_val = f"{TARGET_YEAR}-01-01 00:00:00"
-                        end_val = f"{TARGET_YEAR}-12-31 23:59:59"
+                        from config import TARGET_YEARS
+                        start_year = min(TARGET_YEARS)
+                        end_year = max(TARGET_YEARS)
+                        start_val = f"{start_year}-01-01 00:00:00"
+                        end_val = f"{end_year}-12-31 23:59:59"
 
+                        # 先注入时间范围
                         for k in start_keys:
-                            if k in params:
-                                params[k] = start_val
+                            if k in base_params:
+                                base_params[k] = start_val
                         for k in end_keys:
-                            if k in params:
-                                params[k] = end_val
-                        for k in year_keys:
-                            if k in params:
-                                params[k] = str(TARGET_YEAR)
+                            if k in base_params:
+                                base_params[k] = end_val
 
-                        # 某些站点需要时间戳
-                        if 'timeStamp' in params and not params['timeStamp']:
-                            params['timeStamp'] = '1'
+                        # 年份字段：如果存在，则对 TARGET_YEARS 中每个年份各提交一次
+                        year_fields_present = [k for k in year_keys if k in base_params]
+                        years_to_try = TARGET_YEARS if year_fields_present else [None]
 
-                        if method == 'post':
-                            logger.info(f"[站内检索][FORM][POST] url={form_url} params={params}")
-                            res = self.session.post(form_url, data=params, timeout=TIMEOUT, allow_redirects=True)
-                        else:
-                            logger.info(f"[站内检索][FORM][GET] url={form_url} params={params}")
-                            res = self.session.get(form_url, params=params, timeout=TIMEOUT, allow_redirects=True)
-                        if res.status_code == 200:
-                            start_url = res.url
-                            if start_url not in tried_urls:
-                                tried_urls.add(start_url)
-                                found = self.parse_search_results(start_url, city_name=city)
-                                logger.info(f"[站内检索][FORM] 命中结果 {len(found)} 条 -> {start_url}")
-                                reports.extend(found)
+                        for y in years_to_try:
+                            params = dict(base_params)
+                            if y is not None:
+                                for k in year_fields_present:
+                                    params[k] = str(y)
+
+                            # 某些站点需要时间戳
+                            if 'timeStamp' in params and not params['timeStamp']:
+                                params['timeStamp'] = '1'
+
+                            if method == 'post':
+                                logger.info(f"[站内检索][FORM][POST] url={form_url} params={params}")
+                                res = self.session.post(form_url, data=params, timeout=TIMEOUT, allow_redirects=True)
+                            else:
+                                logger.info(f"[站内检索][FORM][GET] url={form_url} params={params}")
+                                res = self.session.get(form_url, params=params, timeout=TIMEOUT, allow_redirects=True)
+                            if res.status_code == 200:
+                                start_url = res.url
+                                if start_url not in tried_urls:
+                                    tried_urls.add(start_url)
+                                    found = self.parse_search_results(start_url, city_name=city)
+                                    logger.info(f"[站内检索][FORM] 命中结果 {len(found)} 条 -> {start_url}")
+                                    reports.extend(found)
                     except Exception:
                         continue
 
@@ -612,24 +681,35 @@ class FinanceReportSpider:
                 for param in param_candidates:
                     for kw in keywords:
                         try:
-                            req_params = {param: kw}
+                            base_params = {param: kw}
                             # 同样尝试加入常见的时间窗口参数（如果该端点支持）
+                            from config import TARGET_YEARS
+                            start_year = min(TARGET_YEARS)
+                            end_year = max(TARGET_YEARS)
                             for k in ['startTime', 'start_time', 'stime', 'startDate', 'start_date', 'from', 'fromDate']:
-                                req_params.setdefault(k, f"{TARGET_YEAR}-01-01 00:00:00")
+                                base_params.setdefault(k, f"{start_year}-01-01 00:00:00")
                             for k in ['endTime', 'end_time', 'etime', 'endDate', 'end_date', 'to', 'toDate']:
-                                req_params.setdefault(k, f"{TARGET_YEAR}-12-31 23:59:59")
-                            for k in ['year', 'yearStr', 'time', 'sj']:
-                                req_params.setdefault(k, str(TARGET_YEAR))
+                                base_params.setdefault(k, f"{end_year}-12-31 23:59:59")
 
-                            logger.info(f"[站内检索][COMMON][GET] url={search_url} params={req_params}")
-                            res = self.session.get(search_url, params=req_params, timeout=TIMEOUT, allow_redirects=True)
-                            if res.status_code == 200:
-                                start_url = res.url
-                                if start_url not in tried_urls:
-                                    tried_urls.add(start_url)
-                                    found = self.parse_search_results(start_url, city_name=city)
-                                    logger.info(f"[站内检索][COMMON] 命中结果 {len(found)} 条 -> {start_url}")
-                                    reports.extend(found)
+                            year_keys = ['year', 'yearStr', 'time', 'sj']
+                            year_fields_present = [k for k in year_keys if k in base_params]
+                            years_to_try = TARGET_YEARS if year_fields_present else [None]
+
+                            for y in years_to_try:
+                                req_params = dict(base_params)
+                                if y is not None:
+                                    for k in year_fields_present:
+                                        req_params[k] = str(y)
+
+                                logger.info(f"[站内检索][COMMON][GET] url={search_url} params={req_params}")
+                                res = self.session.get(search_url, params=req_params, timeout=TIMEOUT, allow_redirects=True)
+                                if res.status_code == 200:
+                                    start_url = res.url
+                                    if start_url not in tried_urls:
+                                        tried_urls.add(start_url)
+                                        found = self.parse_search_results(start_url, city_name=city)
+                                        logger.info(f"[站内检索][COMMON] 命中结果 {len(found)} 条 -> {start_url}")
+                                        reports.extend(found)
                         except Exception:
                             continue
 
@@ -651,15 +731,15 @@ class FinanceReportSpider:
                 "公开", "信息公开", "政务公开", "政府信息公开", "财政信息公开", "财政公开",
                 "法定主动公开内容", "重点领域信息公开", "基础信息公开",
                 "财政资金", "财政资金领域信息公开",
-                "财政信息", "财政预决算", "预决算", "政府预决算",
+                "财政信息", "财政预决算", "决算", "政府预决算",
                 "政府决算公开", "决算公开", "财政决算公开",
-                "市政府财政预决算", "三公"
+                "市政府财政预决算", "市政府预决算", "三公","财政"
             ]
 
             mid_level_keywords = [
-                "法定主动公开内容", "财政资金", "财政信息", "财政预决算", "预决算", "政府预决算",
+                "法定主动", "财政资金", "财政信息", "财政预决算", "决算", "政府预决算",
                 "政府决算公开", "决算公开", "财政决算公开", "重点领域信息公开", "财政资金领域信息公开",
-                "基础信息公开", "市政府财政预决算", "三公"
+                "基础信息公开", "市政府财政预决算", "市政府预决算", "公开","法定","财政"
             ]
 
             def _keyword_score(text: str, keywords: List[str]) -> int:
@@ -706,6 +786,20 @@ class FinanceReportSpider:
             # 从首页开始
             collect_sections(base_url)
 
+            # 合并基于生成映射的常见起点（若与当前站点同域）
+            try:
+                from generated_site_mappings_result import CITY_SITE_SOURCES_WITH_URLS
+                domain_root = urlparse(base_url).netloc
+                preset = CITY_SITE_SOURCES_WITH_URLS.get(city, {})
+                preset_urls = preset.get('urls') or []
+                for u in preset_urls:
+                    if urlparse(u).netloc == domain_root:
+                        candidate_section_urls.add(u)
+                if preset_urls:
+                    logger.info(f"{city}: 合并预置栏目起点 {len(preset_urls)} 条（同域过滤后 {len(candidate_section_urls)} 条）")
+            except Exception as ex:
+                logger.debug(f"{city}: 合并预置栏目起点失败: {ex}")
+
             # 对已收集栏目做一层扩展收集（避免漏掉次级栏目）
             for url in list(candidate_section_urls)[:50]:  # 限制扩展数量，避免全站爬爆
                 collect_sections(url)
@@ -714,6 +808,12 @@ class FinanceReportSpider:
             candidate_section_urls.add(base_url)
 
             logger.info(f"{city}: 收集到 {len(candidate_section_urls)} 个公开相关栏目起点，开始检索决算链接…")
+            if candidate_section_urls:
+                try:
+                    sample = list(candidate_section_urls)[:10]
+                    logger.info(f"{city}: 栏目起点示例: {sample}")
+                except Exception:
+                    pass
 
             # Step2: 在每个栏目页内，使用现有分页解析逻辑提取满足条件的链接
             added = set()

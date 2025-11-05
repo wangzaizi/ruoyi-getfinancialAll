@@ -381,3 +381,138 @@ timeStamp=1
 - 结果文件自动更新，保留已成功的数据
 
 **实现位置**：`crawl_city_public_urls.py`
+
+### 6. 域名格式扩展（支持更多城市网站格式）
+
+**问题**：不同城市的政府网站和财政局网站使用不同的域名格式，原规则无法覆盖所有情况。
+
+**解决方案**：扩展了多种域名格式支持
+
+#### 6.1 市政府网站格式
+- `https://www.{full}.gov.cn` - 全拼带www（如 `www.sanming.gov.cn`）
+- `https://{full}.gov.cn` - 全拼不带www
+- `https://www.{abbr}.gov.cn` - 缩写带www（如 `www.sm.gov.cn`，三明市人民政府）
+- `https://{abbr}.gov.cn` - 缩写不带www
+- `https://www.{abbr}s.gov.cn` - 缩写+市的首字母带www（如 `www.jcs.gov.cn`，金昌市人民政府）
+- `https://{abbr}s.gov.cn` - 缩写+市的首字母不带www
+- `https://{prov}{full}.gov.cn` - 省缩写+全拼（如 `hnloudi.gov.cn`，娄底市人民政府）
+- `https://www.{prov}{full}.gov.cn` - 省缩写+全拼带www
+- `https://{prov}{abbr}.gov.cn` - 省缩写+城市缩写
+- `https://www.{prov}{abbr}.gov.cn` - 省缩写+城市缩写带www
+
+#### 6.2 财政局网站格式
+- `https://czj.{full}.gov.cn` - 标准格式（全拼）
+- `https://czj.{abbr}.gov.cn` - 标准格式（缩写，如 `czj.sz.gov.cn`）
+- `https://cz.{full}.gov.cn` - 简化格式（全拼，如 `cz.sanming.gov.cn`）
+- `https://cz.{abbr}.gov.cn` - 简化格式（缩写，如 `cz.sm.gov.cn`，三明市财政局）
+- `https://mof.{full}.gov.cn` - MOF格式（全拼，如 `mof.sanya.gov.cn`，三亚市财政局）
+- `https://mof.{abbr}.gov.cn` - MOF格式（缩写）
+- `https://czj.{prov}{full}.gov.cn` - 省缩写+财政局（如 `czj.hnloudi.gov.cn`，娄底市财政局）
+- `https://mof.{prov}{full}.gov.cn` - 省缩写+MOF格式
+- `https://czj.{prov}{abbr}.gov.cn` - 省缩写+财政局+城市缩写
+- `https://mof.{prov}{abbr}.gov.cn` - 省缩写+MOF+城市缩写
+
+**实现位置**：
+- `generate_site_mappings.py` - 生成映射时尝试所有格式
+- `spider.py` 的 `resolve_city_sites` 方法 - 运行时动态尝试
+
+### 7. 搜索引擎辅助查找（generate_site_mappings.py）
+
+**问题**：当拼音规则无法找到 gov/fin 网站时，需要备用方案。
+
+**解决方案**：
+- 当拼音规则未找到网站时，自动使用多个搜索引擎查找
+- 支持的搜索引擎：百度、必应、360、搜狗
+- 使用多种查询关键词组合（如"site:.gov.cn 城市 人民政府"、"城市 财政局 官网"等）
+- 自动验证DNS和HTTP可访问性
+- 反爬虫技术：
+  - 随机User-Agent轮换（6种不同浏览器）
+  - 随机延迟（1-3秒）
+  - 随机化Referer请求头
+  - 搜索引擎顺序随机打乱
+
+**实现位置**：`generate_site_mappings.py` 中的 `_search_by_engines` 和 `_search_engine` 方法
+
+### 8. 性能优化（generate_site_mappings.py）
+
+**问题**：生成站点映射时处理速度慢，CPU和内存利用率低。
+
+**解决方案**：
+- **动态并发配置**：自动检测CPU核心数，使用 `CPU核心数 × 4` 个线程（最多64个）
+- **连接池优化**：连接池大小 = `workers × 8`，最大连接数 = `workers × 16`
+- **Session复用**：使用线程本地存储，每个线程复用同一个Session
+- **超时优化**：缩短超时时间（默认6-8秒），加快失败响应
+- **网站检测改进**：先尝试HEAD请求，失败时自动降级为GET请求（某些网站不支持HEAD）
+- **日志输出到文件**：所有日志同时输出到文件（`logs/generate_mappings_YYYYMMDD_HHMMSS.log`）和控制台
+
+**实现位置**：`generate_site_mappings.py`
+
+### 9. 分页遍历限制优化
+
+**问题**：分页遍历可能遍历过多页面，消耗大量时间和资源。
+
+**解决方案**：
+- 将最大分页数从100页减少到10页
+- 在 `parse_search_results` 方法中限制 `max_pages = 10`
+- 确保在合理时间内完成搜索，避免在深层分页上耗时过长
+
+**实现位置**：`spider.py` 的 `parse_search_results` 方法
+
+### 10. 城市URL爬取优化（crawl_city_public_urls.py）
+
+**问题**：需要为每个城市生成包含 urls 的数据，基于 gov/fin 根域查找符合条件的公开链接。
+
+**解决方案**：
+- **数据源统一**：从 `generated_site_mappings_result.py` 的 `CITY_SITE_SOURCES_WITH_URLS` 获取所有城市的 gov/fin 网站地址
+- **增量爬取**：读取现有的 `results.json`，只对 `success: false` 的城市重新爬取
+- **不使用暴力遍历**：默认使用公开栏目检索方法（`violent_fallback=False`）
+- **并发处理**：使用多线程并发处理，充分利用CPU和内存（CPU核心数 × 4，最多64线程）
+- **结果汇总**：所有城市的结果汇总到一个文件 `data/city_urls_crawled/results.json`
+- **成功判定**：`urls` 非空即为成功，否则为失败
+
+**工作流程**：
+1. 从 `CITY_SITE_SOURCES_WITH_URLS` 获取所有城市的 gov/fin 地址
+2. 检查现有 `results.json`，识别需要重新爬取的城市（`success: false`）
+3. 对需要重新爬取的城市，使用 `search_finance_reports` 方法查找符合条件的公开链接
+4. 汇总所有结果到 `results.json`，保留已成功的城市数据
+
+**实现位置**：`crawl_city_public_urls.py`
+
+### 11. 生成的映射文件结构
+
+**文件说明**：
+- `generated_site_mappings202511041549.py`：自动生成的城市站点映射（包含所有城市的 gov/fin 网站地址）
+- `generated_site_mappings_result.py`：在基础映射上构建的扩展配置（包含 urls 检索起点和 filters 过滤规则）
+- `data/city_urls_crawled/results.json`：爬取的公开链接结果（包含每个城市的 urls 列表和成功状态）
+
+**使用方式**：
+- 生成站点映射：`python generate_site_mappings.py`
+- 爬取城市公开链接：`python crawl_city_public_urls.py`
+
+### 12. 多年份支持（同时匹配 2024 与 2025）
+
+**问题**：实际需要同时抓取 2024 与 2025 年度的公开内容。
+
+**解决方案**：
+- 增加 `TARGET_YEARS = [2024, 2025]` 配置项；不再依赖“主年份”做过滤判断。
+- 过滤逻辑更新：`matches_keywords` 与 `_is_final_decision_html` 对任一年份命中即通过（且仍需满足“决算”与层级标识）。
+- 表单/检索参数：
+  - 若存在起止时间字段，自动覆盖最小年到最大年（如 2024-01-01 ~ 2025-12-31）。
+  - 若存在单一年份字段（如 `year`、`yearStr`、`time`、`sj`），对 `TARGET_YEARS` 中每个年份各提交一次请求并合并结果。
+
+**实现位置**：
+- `config.py`：新增 `TARGET_YEARS`，保留 `TARGET_YEAR` 仅用于兼容字段回填。
+- `spider.py`：关键词匹配与表单/检索参数逻辑同步支持多年份。
+
+### 13. 齐齐哈尔路径命中优化与运行日志
+
+**问题**：齐齐哈尔（`qqhr.gov.cn`）仅从首页收集起点，未深入“首页/政务公开/法定主动公开内容/预算决算/市政府预决算”；同时出现 SSL/代理错误、分页“下一页”为 `javascript:void(0)`。
+
+**解决方案**：
+- **合并预置栏目起点**：在公开栏目收集阶段，把 `generated_site_mappings_result.py` 中该城市的预置 `urls` 按同域过滤后并入检索起点，避免只从首页出发。
+- **关键词覆盖**：在公开栏目关键词中加入“市政府预决算”，提高收集与 BFS 优先级。
+- **协议回退**：页面请求遇到 SSL/代理异常时自动由 https 回退到 http 再试，并记录日志。
+- **分页健壮性**：忽略 `javascript:void(0)` / `#` 链接；解析 `onclick` 中的 `goPage/turnPage/toPage(页码)` 并基于现有 URL 参数构造真实下一页；仍限制最多 10 页。
+- **文件日志**：每次运行自动写入 `logs/spider_YYYYMMDD_HHMMSS.log`，记录栏目起点样例、每页链接数与命中数、下一页推断、协议回退等以便复盘。
+
+**实现位置**：`spider.py`（公开栏目收集、关键词集、分页解析、请求回退、文件日志初始化）

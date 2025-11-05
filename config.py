@@ -20,7 +20,10 @@ TIMEOUT = 30  # 请求超时时间（秒）
 MAX_RETRIES = 3  # 最大重试次数
 
 # 报告年份
-TARGET_YEAR = 2024
+# 支持多年份目标（例如同时抓取 2024 与 2025）
+# 兼容：保留 TARGET_YEAR 作为默认的“主年份”（取 TARGET_YEARS 中最大值）
+TARGET_YEARS = [2024, 2025]
+TARGET_YEAR = max(TARGET_YEARS)
 
 # 搜索关键词
 SEARCH_KEYWORDS = [
@@ -29,7 +32,7 @@ SEARCH_KEYWORDS = [
 ]
 
 # 文件类型
-TARGET_FILE_TYPES = [".pdf", ".doc", ".docx", ".xls", ".xlsx"]
+TARGET_FILE_TYPES = [".pdf", ".doc", ".docx", ".xls", ".xlsx",".rar",".zip"]
 
 # 请求头
 HEADERS = {
