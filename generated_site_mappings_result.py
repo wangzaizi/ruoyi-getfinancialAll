@@ -25,23 +25,7 @@ from generated_site_mappings202511041549 import CITY_SITE_OVERRIDES as BASE_MAPP
 
 COMMON_SECTION_PATHS: List[str] = [
     # 政府信息公开/法定主动公开/财政（预算决算）
-    "/zfxxgk/", "/zwgk/", "/xxgk/", "/gk/", "/gsgg/",
-    "/zfxxgk/fdzdgknr/", "/zwgk/fdzdgknr/", "/xxgk/fdzdgknr/",
-    "/zfxxgk/zdlyxxgk/", "/zwgk/zdlyxxgk/", "/zdlyxxgk/",
-    # 财政专栏
-    "/czxxgk/", "/czgk/", "/czzx/", "/cz/",
-    # 部门信息公开中的财政局
-    "/bmxxgk/czj/", "/bmxxgk/", "/bmxxgkml/czj/",
-    # 重点领域财政资金
-    "/zdlyxxgk/czzj/", "/zdlyxxgk/czxx/", "/zdlyxxgk/czzjxxgk/",
-    # 预算/决算常见目录
-    "/ysjs/", "/ys/", "/js/", "/ysqk/", "/jsqk/",
-    "/ysjsgk/", "/ysjsxx/", "/ysxx/", "/jsxx/",
-    # 预决算及三公经费
-    "/caiwuyusuan/", "/yusuan/", "/yujuesuan/", "/yusuanjuesuan/",
-    "/sangong/", "/sgjf/", "/czzj/sg/",
-    # 财政局主页（部分城市财政局内容在根下）
-    "/czj/"
+    
 ]
 
 

@@ -337,8 +337,8 @@ class FinanceReportSpider:
 
     def _is_final_decision_html(self, url: str, title: str, city: str) -> bool:
         """
-        最终 HTML 校验：不再要求 URL 本身包含关键词；
-        依据：链接元素文本/标题 或 目标页 <title>/首屏标题 是否同时包含：TARGET_YEAR、"决算"、本级标识（市级/本级/城市名）。
+        最终 HTML 校验：仅用目标页内容判断（不再依赖被点击元素文本）。
+        判定依据：目标页标题/首屏标题/常见标题容器包含 任一目标年份(2024/2025)、不含排除年份(如2023)、且含“决算”和本级标识（城市名/市级/本级）。
         仅对 HTML 页面生效（直链文件不在此判断范围）。
         """
         lower = (url or '').lower()
@@ -346,30 +346,60 @@ class FinanceReportSpider:
         if any(lower.endswith(ext) for ext in TARGET_FILE_TYPES):
             return False
 
-        context_text = title or ''
-        # 先用元素文本判断
-        from config import TARGET_YEARS 
-        from config import NO_TARGET_YEARS
-        if ( (all(str(y) not in context_text for y in NO_TARGET_YEARS)) and  any(str(y) in context_text for y in TARGET_YEARS)) and ('决算' in context_text) and self._contains_level_markers(city, context_text):
-            return True
-
-        # 再尝试抓取目标页标题增强判断
         try:
-            resp = self.session.get(url, timeout=TIMEOUT)
-            if resp.status_code == 200 and 'text/html' in resp.headers.get('Content-Type', '').lower():
-                soup = BeautifulSoup(resp.text, 'html.parser')
-                page_title = (soup.title.get_text().strip() if soup.title else '')
-                # 常见正文标题备选
-                h1 = soup.find('h1')
-                h1_text = h1.get_text().strip() if h1 else ''
-                combined = f"{page_title} {h1_text}"
-                from config import TARGET_YEARS
-                from config import NO_TARGET_YEARS
-                if ((all(str(y) not in combined for y in TARGET_YEARS)) and any(str(y) in combined for y in TARGET_YEARS)) and ('决算' in combined) and self._contains_level_markers(city, combined):
-                    return True
-        except Exception:
-            pass
+            resp = self.session.get(url, timeout=TIMEOUT, allow_redirects=True)
+            if resp.status_code != 200:
+                return False
+            content_type = resp.headers.get('Content-Type', '').lower()
+            if ('text/html' not in content_type) and (not lower.endswith('.html')):
+                return False
 
+            soup = BeautifulSoup(resp.text, 'html.parser')
+            page_title = (soup.title.get_text().strip() if soup.title else '')
+            h1 = soup.find('h1')
+            h1_text = h1.get_text().strip() if h1 else ''
+
+            # 常见标题容器备选
+            title_candidates = [page_title, h1_text]
+            for css in ['.title', '.tit', '.article-title', '.info-title']:
+                el = soup.select_one(css)
+                if el:
+                    t = el.get_text().strip()
+                    if t:
+                        title_candidates.append(t)
+            combined = ' '.join([t for t in title_candidates if t])
+
+            from config import TARGET_YEARS, NO_TARGET_YEARS
+            if (
+                any(str(y) in combined for y in TARGET_YEARS) and
+                all(str(y) not in combined for y in NO_TARGET_YEARS) and
+                ('决算' in combined) and
+                self._contains_level_markers(city, combined)
+            ):
+                logger.info(f"[HTML验证][{city}] 页面通过校验(title/h1): {url}")
+                return True
+
+            # 退化：尝试“当前位置/面包屑”与首屏文本的一部分
+            breadcrumb = soup.find('div', class_=re.compile(r'(breadcrumb|location|当前位置)'))
+            breadcrumb_text = breadcrumb.get_text().strip() if breadcrumb else ''
+            body = soup.find('body')
+            first_screen = ''
+            if body:
+                first_screen = ' '.join(body.get_text().split())[:1000]
+            combined2 = f"{breadcrumb_text} {first_screen}".strip()
+            if (
+                any(str(y) in combined2 for y in TARGET_YEARS) and
+                all(str(y) not in combined2 for y in NO_TARGET_YEARS) and
+                ('决算' in combined2) and
+                self._contains_level_markers(city, combined2)
+            ):
+                logger.info(f"[HTML验证][{city}] 页面通过校验(面包屑/首屏): {url}")
+                return True
+        except Exception as ex:
+            logger.debug(f"[HTML验证][{city}] 页面校验异常 -> {url} : {ex}")
+            return False
+
+        logger.info(f"[HTML验证][{city}] 页面未通过校验 -> {url}")
         return False
     
     def find_next_page_url(self, page_url: str, soup: BeautifulSoup) -> Optional[str]:
@@ -490,13 +520,13 @@ class FinanceReportSpider:
                 processed_pages.add(current_page_url)
                 
                 page_count += 1
-                logger.info(f"解析页面 {page_count}: {current_page_url}")
+                logger.info(f"[栏目扫描][{city_name}] 开始解析第 {page_count} 页: {current_page_url}")
                 
                 try:
                     response = self.session.get(current_page_url, timeout=TIMEOUT)
                 except requests.RequestException as ex:
                     # SSL/代理错误时尝试 http 回退
-                    logger.warning(f"请求失败，尝试协议回退: {current_page_url}, err={ex}")
+                    logger.warning(f"[栏目扫描][{city_name}] 请求失败，尝试协议回退: {current_page_url}, err={ex}")
                     try:
                         parsed = urlparse(current_page_url)
                         if parsed.scheme == 'https':
@@ -505,19 +535,19 @@ class FinanceReportSpider:
                             if response.status_code == 200:
                                 current_page_url = fallback
                             else:
-                                logger.warning(f"HTTP 回退仍失败: {fallback} code={response.status_code}")
+                                logger.warning(f"[栏目扫描][{city_name}] HTTP 回退仍失败: {fallback} code={response.status_code}")
                                 break
                         else:
                             raise
                     except Exception:
                         break
                 if response.status_code != 200:
-                    logger.warning(f"无法访问页面 {current_page_url}，状态码: {response.status_code}")
+                    logger.warning(f"[栏目扫描][{city_name}] 无法访问页面 {current_page_url}，状态码: {response.status_code}")
                     break
                 
                 soup = BeautifulSoup(response.text, 'html.parser')
                 all_links = soup.find_all('a', href=True)
-                logger.info(f"页面 {page_count} 找到 {len(all_links)} 个链接，开始过滤...")
+                logger.info(f"[栏目扫描][{city_name}] 第 {page_count} 页找到 {len(all_links)} 个链接，开始关键词过滤...")
                 
                 processed_urls = set()  # 用于去重
                 page_reports = []
@@ -542,25 +572,37 @@ class FinanceReportSpider:
                     parent_text = link.parent.get_text().strip() if link.parent else ''
                     combined_text = f"{title} {parent_text}"
                     
+                    # 强匹配：满足年份/城市/决算/排除项
                     if self.matches_keywords(combined_text, city_name):
+                        logger.info(f"[栏目扫描][{city_name}] 关键词命中 -> title='{title}' href='{href}' 组合文本='{combined_text[:80]}...'")
                         page_reports.append({
                             'title': title or href.split('/')[-1],
                             'url': full_url
                         })
+                        continue
+
+                    # 轻匹配：仅包含“决算”，用于后续跳页内容校验
+                    if '决算' in combined_text:
+                        logger.info(f"[栏目扫描][{city_name}] 轻筛命中(仅含决算) -> title='{title}' href='{href}'")
+                        page_reports.append({
+                            'title': title or href.split('/')[-1],
+                            'url': full_url,
+                            'weak_hit': True
+                        })
                 
-                logger.info(f"页面 {page_count} 提取到 {len(page_reports)} 个相关链接")
+                logger.info(f"[栏目扫描][{city_name}] 第 {page_count} 页提取到 {len(page_reports)} 个相关链接")
                 all_reports.extend(page_reports)
                 
                 next_page_url = self.find_next_page_url(current_page_url, soup)
                 if next_page_url:
-                    logger.info(f"找到下一页: {next_page_url}")
+                    logger.info(f"[栏目扫描][{city_name}] 找到下一页: {next_page_url}")
                     current_page_url = next_page_url
                     time.sleep(REQUEST_DELAY)
                 else:
-                    logger.info(f"已到达最后一页（第 {page_count} 页）")
+                    logger.info(f"[栏目扫描][{city_name}] 已到达最后一页（第 {page_count} 页）")
                     break
             
-            logger.info(f"总共遍历了 {page_count} 页，提取到 {len(all_reports)} 个相关链接")
+            logger.info(f"[栏目扫描][{city_name}] 栏目遍历完成，共 {page_count} 页，提取到 {len(all_reports)} 个相关链接")
             
         except Exception as e:
             logger.error(f"解析页面失败 {start_url}: {e}")
@@ -730,7 +772,7 @@ class FinanceReportSpider:
         try:
             # 公开类栏目关键词（扩充涵盖典型路径用语）
             public_keywords = [
-                "公开", "信息公开", "政务公开", "政府信息公开", "财政信息公开", "财政公开",
+                "信息公开", "政务公开", "政府信息公开", "财政信息公开", "财政公开",
                 "法定主动公开内容", "重点领域信息公开", "基础信息公开",
                 "财政资金", "财政资金领域信息公开",
                 "财政信息", "财政预决算", "决算", "政府预决算",
@@ -741,7 +783,7 @@ class FinanceReportSpider:
             mid_level_keywords = [
                 "法定主动", "财政资金", "财政信息", "财政预决算", "决算", "政府预决算",
                 "政府决算公开", "决算公开", "财政决算公开", "重点领域信息公开", "财政资金领域信息公开",
-                "基础信息公开", "市政府财政预决算", "市政府预决算", "公开","法定","财政"
+                "基础信息公开", "市政府财政预决算", "市政府预决算", "法定","财政"
             ]
 
             def _keyword_score(text: str, keywords: List[str]) -> int:
@@ -769,8 +811,17 @@ class FinanceReportSpider:
                     if from_url in visited_for_sections:
                         return
                     visited_for_sections.add(from_url)
+                    # 先 HEAD 预检，过滤掉 404/无效路径
+                    try:
+                        head = self.session.head(from_url, timeout=10, allow_redirects=True)
+                        if head.status_code >= 400:
+                            logger.info(f"[栏目收集][{city}] 跳过无效栏目(HEAD {head.status_code}): {from_url}")
+                            return
+                    except Exception:
+                        logger.debug(f"[栏目收集][{city}] HEAD 预检异常，仍继续 GET: {from_url}")
                     resp = self.session.get(from_url, timeout=TIMEOUT)
                     if resp.status_code != 200:
+                        logger.info(f"[栏目收集][{city}] 跳过无效栏目(GET {resp.status_code}): {from_url}")
                         return
                     soup = BeautifulSoup(resp.text, 'html.parser')
                     for a in soup.find_all('a', href=True):
@@ -782,8 +833,9 @@ class FinanceReportSpider:
                         text_all = f"{title} {href}"
                         if any(pk in text_all for pk in public_keywords) and same_domain(base_url, full_url):
                             candidate_section_urls.add(full_url)
+                            logger.info(f"[栏目收集][{city}] 发现公开栏目链接 -> title='{title}' href='{href}'")
                 except Exception as ex:
-                    logger.debug(f"收集公开栏目失败 {from_url}: {ex}")
+                    logger.debug(f"[栏目收集][{city}] 收集公开栏目失败 {from_url}: {ex}")
 
             # 从首页开始
             collect_sections(base_url)
@@ -817,27 +869,30 @@ class FinanceReportSpider:
                 except Exception:
                     pass
 
-            # Step2: 在每个栏目页内，使用现有分页解析逻辑提取满足条件的链接
+            # Step2: 在每个栏目页内，使用现有分页解析逻辑提取满足条件的链接（仅关注 HTML 目标页）
             added = set()
-            for start_url in candidate_section_urls:
+            for idx, start_url in enumerate(candidate_section_urls, 1):
+                logger.info(f"[栏目扫描][{city}] 开始扫描栏目 {idx}/{len(candidate_section_urls)}: {start_url}")
                 try:
                     page_reports = self.parse_search_results(start_url, city_name=city)
                     for r in page_reports:
                         key = r.get('url')
                         if key and key not in added:
-                            # 若为HTML页，需满足“最终HTML需要包含 2024+决算+本级/市级/城市名”的规则
+                            # 仅处理 HTML 链接；文件直链忽略
                             is_file_link = any(key.lower().endswith(ext) for ext in TARGET_FILE_TYPES)
-                            if (not is_file_link) and (not self._is_final_decision_html(key, r.get('title',''), city)):
+                            if is_file_link:
                                 continue
-                            # 标记该链接来源于公开栏目，用于附件下载放宽策略
+                            # 最终校验仅基于目标页内容
+                            if not self._is_final_decision_html(key, '', city):
+                                continue
                             r['from_public_section'] = True
                             reports.append(r)
                             added.add(key)
-                            # 早停：当前城市找到一个符合的 HTML 目标页后直接返回
-                            if not is_file_link:
-                                return reports
+                            logger.info(f"[栏目扫描][{city}] 命中有效HTML目标页，提前结束扫描: {key}")
+                            # 命中一个 HTML 目标页后即返回（当前任务聚焦目标页）
+                            return reports
                 except Exception as ex:
-                    logger.debug(f"解析栏目失败 {start_url}: {ex}")
+                    logger.debug(f"[栏目扫描][{city}] 解析栏目失败 {start_url}: {ex}")
 
             # 若仍未找到且允许，则对公开类栏目做有限深度的暴力遍历
             if violent_fallback and (not reports) and candidate_section_urls:
@@ -863,7 +918,7 @@ class FinanceReportSpider:
                             continue
                         soup = BeautifulSoup(resp.text, 'html.parser')
 
-                        # 1) 在当前页尝试直接匹配决算链接
+                        # 1) 在当前页尝试直接匹配决算链接（仅关注 HTML 页）
                         links = soup.find_all('a', href=True)
                         page_added = 0
                         for a in links:
@@ -873,27 +928,22 @@ class FinanceReportSpider:
                                 continue
                             full = urljoin(current_url, href)
                             text_all = f"{title} {href}"
-                            if self.matches_keywords(text_all, city_name=city):
-                                # HTML页需满足最终HTML规则
-                                is_file_link = any(full.lower().endswith(ext) for ext in TARGET_FILE_TYPES)
-                                if (not is_file_link) and (not self._is_final_decision_html(full, title, city)):
-                                    pass
-                                else:
-                                    if full not in added:
-                                        reports.append({'title': title or href.split('/')[-1], 'url': full, 'from_public_section': True})
-                                        added.add(full)
-                                        page_added += 1
-                                        # 早停：命中 HTML 即可返回（文件直链不触发早停）
-                                        if not is_file_link:
-                                            return reports
-
-                            # 2) 文件直链也必须满足关键字规则
-                            if any(full.lower().endswith(ext) for ext in TARGET_FILE_TYPES):
-                                if self.matches_keywords(text_all, city_name=city):
-                                    if full not in added:
-                                        reports.append({'title': title or href.split('/')[-1], 'url': full, 'from_public_section': True})
-                                        added.add(full)
-                                        page_added += 1
+                            strict_hit = self.matches_keywords(text_all, city_name=city)
+                            light_hit = ('决算' in text_all)
+                            if strict_hit or light_hit:
+                                # 忽略文件直链
+                                if any(full.lower().endswith(ext) for ext in TARGET_FILE_TYPES):
+                                    continue
+                                # HTML 页最终校验仅基于目标页内容
+                                if not self._is_final_decision_html(full, '', city):
+                                    continue
+                                if full not in added:
+                                    if light_hit and not strict_hit:
+                                        logger.info(f"[暴力遍历][{city}] 轻筛命中(仅含决算)，验证通过 -> {full}")
+                                    reports.append({'title': title or href.split('/')[-1], 'url': full, 'from_public_section': True})
+                                    added.add(full)
+                                    page_added += 1
+                                    return reports
 
                         # 3) 控制拓展到下一层（优先拓展包含中层关键词的链接）
                         if depth < depth_limit:
@@ -914,7 +964,7 @@ class FinanceReportSpider:
                                 queue.append((nxt, depth + 1))
 
                         if page_added > 0:
-                            logger.info(f"{city}: 暴力遍历在 {current_url} 捕获 {page_added} 个候选")
+                            logger.info(f"[暴力遍历][{city}] 在 {current_url} 捕获 {page_added} 个候选")
 
                     except Exception as ex:
                         logger.debug(f"暴力遍历失败 {current_url}: {ex}")

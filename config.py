@@ -25,6 +25,9 @@ MAX_RETRIES = 3  # 最大重试次数
 TARGET_YEARS = [2024, 2025]
 TARGET_YEAR = max(TARGET_YEARS)
 
+# 显式屏蔽年份（用于排除旧年内容，如 2023）
+NO_TARGET_YEARS = [2023]
+
 # 搜索关键词
 SEARCH_KEYWORDS = [
     "决算",

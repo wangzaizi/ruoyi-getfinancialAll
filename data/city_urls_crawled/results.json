@@ -1,8 +1,8 @@
 {
-  "generated_at": "2025-11-05T23:52:32.164443",
+  "generated_at": "2025-11-06T18:04:38.996994",
   "total_cities": 336,
-  "success_count": 23,
-  "failed_count": 313,
+  "success_count": 59,
+  "failed_count": 277,
   "items": [
     {
       "city": "七台河市",
@@ -48,25 +48,16 @@
       "city": "上海市",
       "gov": "https://www.shanghai.gov.cn",
       "fin": "",
-      "urls": [
-        "https://www.shanghai.gov.cn/cmsres/f9/f9d84946c176410ebdebfaf26c0e35bb/eda381396bd3266859d1fb65b0778ad2.pdf",
-        "https://www.shanghai.gov.cn/cmsres/6e/6e669e00515c4a73bacbe9a0431568bd/8055848cce6c13e5bb5258afc38a130c.pdf",
-        "https://www.shanghai.gov.cn/cmsres/a0/a036835077134b0e9556a3d183755030/ff2639f04365789e8605a6ad0c77892f.pdf",
-        "https://www.shanghai.gov.cn/cmsres/ac/ac74366391084574aec01253142a6fa9/a9b0c63928a3f2e4cf7c3abe2371c320.pdf",
-        "https://www.shanghai.gov.cn/cmsres/c2/c2abb645dc214e56924e8e0841dc3f7a/e17237b8b8843d83113827f4088f5584.pdf",
-        "https://www.shanghai.gov.cn/cmsres/31/310c74482487428cb8a48552fb97eb14/5b597451772d0960069f288fa5820c06.pdf"
-      ],
+      "urls": [],
       "downloaded_files": "",
-      "success": true
+      "success": false
     },
     {
       "city": "上饶市",
       "gov": "https://www.zgsr.gov.cn",
       "fin": "",
       "urls": [
-        "https://www.zgsr.gov.cn/epb/sgjf/202509/682d5dc87673433ea4e6ca6dc7c50e16/files/0c95dfc185844b40aa8a0f6a950c93ac.rar",
-        "https://www.zgsr.gov.cn/zgsr/bmxm/202509/3c65b249b09449b393e0ac2a39205585/files/e60cf5fd5d004e4db81177a96d6a7e9a.pdf",
-        "https://www.zgsr.gov.cn/gjj/sgjf/202509/68248b166a9f422280d0d684e42e4d1c/files/a9bc12d355ab4b268436ac45fa8fccb5.pdf"
+        "https://www.zgsr.gov.cn/hrss/czyjs/202509/7e6105ff69b84ca7b04f92a4a0638d0d.shtml"
       ],
       "downloaded_files": "",
       "success": true
@@ -92,10 +83,7 @@
       "gov": "https://www.nxzw.gov.cn/",
       "fin": "",
       "urls": [
-        "https://www.nxzw.gov.cn/zwgk/bmxxgkml/sczj/fdzdgknr_49463/ysjsxx_49468/zgjs/202509/P020250909658552950238.pdf",
-        "https://www.nxzw.gov.cn/zwgk/bmxxgkml/sczj/fdzdgknr_49463/ysjsxx_49468/zgjs/202509/P020250918610858512105.pdf",
-        "https://www.nxzw.gov.cn/zwgk/bmxxgkml/sczj/fdzdgknr_49463/ysjsxx_49468/zgjs/202509/P020250909362688412847.pdf",
-        "https://www.nxzw.gov.cn/zwgk/bmxxgkml/sczj/fdzdgknr_49463/ysjsxx_49468/zgjs/202409/P020241030603066934903.pdf"
+        "https://www.nxzw.gov.cn/zwgk/bmxxgkml/sczj/fdzdgknr_49463/ysjsxx_49468/zgjs/202509/t20250905_5011975.html"
       ],
       "downloaded_files": "",
       "success": true
@@ -136,9 +124,11 @@
       "city": "临沧市",
       "gov": "http://lincang.gov.cn",
       "fin": "",
-      "urls": [],
+      "urls": [
+        "http://lincang.gov.cn/zfxxgk_lcs/artview/347/332160.html"
+      ],
       "downloaded_files": "",
-      "success": false
+      "success": true
     },
     {
       "city": "丹东市",
@@ -160,9 +150,11 @@
       "city": "丽江市",
       "gov": "https://www.lijiang.gov.cn",
       "fin": "",
-      "urls": [],
+      "urls": [
+        "https://www.lijiang.gov.cn/ljsrmzf/c102172/202509/ec6fee6b936b441e9cda99697e3d774f.shtml"
+      ],
       "downloaded_files": "",
-      "success": false
+      "success": true
     },
     {
       "city": "乌兰察布市",
@@ -185,7 +177,7 @@
       "gov": "https://www.wlmq.gov.cn",
       "fin": "",
       "urls": [
-        "https://www.wlmq.gov.cn/wlmqs/c119441/202509/ac3efb73ed0f447bbe5d3482a6ea1264/files/2024年度乌鲁木齐市财政局决算报表公开.xlsx"
+        "https://www.wlmq.gov.cn/wlmqs/c119424/202509/b4045fba70c141a881a8a18b5f501e09.shtml"
       ],
       "downloaded_files": "",
       "success": true
@@ -202,17 +194,21 @@
       "city": "九江市",
       "gov": "https://www.jiujiang.gov.cn",
       "fin": "",
-      "urls": [],
+      "urls": [
+        "http://zwfw.jiujiang.gov.cn/zwgk_206/glfw/czxx/202507/t20250718_6974699.html"
+      ],
       "downloaded_files": "",
-      "success": false
+      "success": true
     },
     {
       "city": "云浮市",
       "gov": "https://www.yunfu.gov.cn",
       "fin": "",
-      "urls": [],
+      "urls": [
+        "https://www.yunfu.gov.cn/4765/zdht/yjsgkpt/sjzfyjsyjml/sjzfjs/content/post_1947118.html"
+      ],
       "downloaded_files": "",
-      "success": false
+      "success": true
     },
     {
       "city": "亳州市",
@@ -227,29 +223,7 @@
       "gov": "https://www.yichun.gov.cn",
       "fin": "",
       "urls": [
-        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202508/cd169604cdb5457a800a9fec09ded1b2/files/关于2024年市级决算和2025年上半年市级预算执行情况的报告.pdf",
-        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202508/cd169604cdb5457a800a9fec09ded1b2/files/1.2024年宜春市市本级一般公共预算收入决算表.pdf",
-        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202508/cd169604cdb5457a800a9fec09ded1b2/files/2.2024年宜春市市本级一般公共预算支出决算表.pdf",
-        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202508/cd169604cdb5457a800a9fec09ded1b2/files/3.2024年宜春市市本级一般公共预算支出决算分项表.pdf",
-        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202508/cd169604cdb5457a800a9fec09ded1b2/files/4.2024年宜春市市本级一般公共预算基本支出决算表.pdf",
-        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202508/cd169604cdb5457a800a9fec09ded1b2/files/5.2024年宜春市市本级一般公共预算税收返还和转移支付决算表（分县市区）.pdf",
-        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202508/cd169604cdb5457a800a9fec09ded1b2/files/6.2024年宜春市市本级一般公共预算转移支付决算表（分项目）.pdf",
-        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202508/cd169604cdb5457a800a9fec09ded1b2/files/9.2024年宜春市市本级政府性基金预算收入决算表.pdf",
-        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202508/cd169604cdb5457a800a9fec09ded1b2/files/10.2024年宜春市市本级政府性基金预算支出决算表.pdf",
-        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202508/cd169604cdb5457a800a9fec09ded1b2/files/11.2024年宜春市市本级政府性基金预算支出决算分项表.pdf",
-        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202508/cd169604cdb5457a800a9fec09ded1b2/files/12.2024年宜春市市本级政府性基金预算转移支付决算表（分县市区）.pdf",
-        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202508/cd169604cdb5457a800a9fec09ded1b2/files/13.2024年宜春市市本级政府性基金预算转移支付决算表（分项目）.pdf",
-        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202508/cd169604cdb5457a800a9fec09ded1b2/files/15.2024年宜春市市本级国有资本经营预算收入决算表.pdf",
-        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202508/cd169604cdb5457a800a9fec09ded1b2/files/16.2024年宜春市市本级国有资本经营预算支出决算表.pdf",
-        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202508/cd169604cdb5457a800a9fec09ded1b2/files/17.2024年宜春市市本级国有资本经营预算支出决算分项表.pdf",
-        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202508/cd169604cdb5457a800a9fec09ded1b2/files/18.2024年宜春市市本级国有资本经营预算转移支付决算表（分县市区）.pdf",
-        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202508/cd169604cdb5457a800a9fec09ded1b2/files/20.2024年宜春市市级社会保险基金预算收入决算表.pdf",
-        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202508/cd169604cdb5457a800a9fec09ded1b2/files/21.2024年宜春市市级社会保险基金预算支出决算表.pdf",
-        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202508/cd169604cdb5457a800a9fec09ded1b2/files/22.2024年宜春市市级社会保险基金预算支出决算分项表.pdf",
-        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202508/cd169604cdb5457a800a9fec09ded1b2/files/24.2024年宜春市、市级及所属地区地方政府债务限额、余额决算表.pdf",
-        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202508/cd169604cdb5457a800a9fec09ded1b2/files/25.2024年宜春市、市级及所属地区地方政府债务发行、还本付息决算表.pdf",
-        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202508/cd169604cdb5457a800a9fec09ded1b2/files/29.2024年宜春市市本级财政拨款“三公”经费支出决算表.pdf",
-        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202408/2767eed4c40c4700979dce92a071399d/files/关于2023年市级决算和2024年上半年市级预算执行情况的报告.doc"
+        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202508/cd169604cdb5457a800a9fec09ded1b2.shtml"
       ],
       "downloaded_files": "",
       "success": true
@@ -258,16 +232,18 @@
       "city": "伊犁哈萨克自治州",
       "gov": "https://www.xjyl.gov.cn/",
       "fin": "",
-      "urls": [],
+      "urls": [
+        "https://www.xjyl.gov.cn/xjylz/c112777/xxgk_hjs.shtml"
+      ],
       "downloaded_files": "",
-      "success": false
+      "success": true
     },
     {
       "city": "佛山市",
       "gov": "https://www.foshan.gov.cn",
       "fin": "",
       "urls": [
-        "https://www.foshan.gov.cn/attachment/0/565/565690/6786754.pdf"
+        "https://www.foshan.gov.cn/zwgk/zdly/czxx/czyjs/content/post_6786754.html"
       ],
       "downloaded_files": "",
       "success": true
@@ -316,9 +292,11 @@
       "city": "克孜勒苏柯尔克孜自治州",
       "gov": "https://www.xjkz.gov.cn/",
       "fin": "",
-      "urls": [],
+      "urls": [
+        "https://www.xjkz.gov.cn/xjkz/c124237/202508/c87185d508f14077baea163daad9da46.shtml"
+      ],
       "downloaded_files": "",
-      "success": false
+      "success": true
     },
     {
       "city": "克拉玛依市",
@@ -389,7 +367,7 @@
       "gov": "https://www.beijing.gov.cn",
       "fin": "",
       "urls": [
-        "https://www.beijing.gov.cn/gongkai/caizheng/czbg/jsbg/202508/W020250818388651947882.pdf"
+        "https://www.beijing.gov.cn/gongkai/caizheng/czbg/jsbg/202508/t20250811_4170527.html"
       ],
       "downloaded_files": "",
       "success": true
@@ -478,17 +456,21 @@
       "city": "厦门市",
       "gov": "https://www.xm.gov.cn",
       "fin": "",
-      "urls": [],
+      "urls": [
+        "https://cz.xm.gov.cn/zwxx/czsj/yjssj/202507/t20250716_2945589.htm"
+      ],
       "downloaded_files": "",
-      "success": false
+      "success": true
     },
     {
       "city": "双鸭山市",
       "gov": "http://www.shuangyashan.gov.cn",
       "fin": "",
-      "urls": [],
+      "urls": [
+        "http://www.shuangyashan.gov.cn/sys/sysczjs2024/newslist_one.shtml"
+      ],
       "downloaded_files": "",
-      "success": false
+      "success": true
     },
     {
       "city": "台州市",
@@ -526,9 +508,11 @@
       "city": "吐鲁番市",
       "gov": "https://www.tlf.gov.cn",
       "fin": "",
-      "urls": [],
+      "urls": [
+        "https://www.tlf.gov.cn/tlfs/c106268/202509/c04ef977b2ff4be6b746062faf1803b9.shtml"
+      ],
       "downloaded_files": "",
-      "success": false
+      "success": true
     },
     {
       "city": "吕梁市",
@@ -542,9 +526,11 @@
       "city": "吴忠市",
       "gov": "https://www.wuzhong.gov.cn",
       "fin": "",
-      "urls": [],
+      "urls": [
+        "https://www.wuzhong.gov.cn/xxgk/zfxxgkzd/"
+      ],
       "downloaded_files": "",
-      "success": false
+      "success": true
     },
     {
       "city": "周口市",
@@ -638,15 +624,7 @@
       "gov": "https://www.kashi.gov.cn/",
       "fin": "",
       "urls": [
-        "https://www.kashi.gov.cn/ksdqxzgs/c108103/202509/ce887d5b6d2c4ba68e8b666a2d498793/files/2024年度喀什地区及本级政府决算公开目录-20251017134059347001.pdf",
-        "https://www.kashi.gov.cn/ksdqxzgs/c108103/202509/ce887d5b6d2c4ba68e8b666a2d498793/files/第一部分：政府决算报告及转移支付情况-20251017134100357002.rar",
-        "https://www.kashi.gov.cn/ksdqxzgs/c108103/202509/ce887d5b6d2c4ba68e8b666a2d498793/files/第二部分：一般公共预算决算情况-20251017134102191003.rar",
-        "https://www.kashi.gov.cn/ksdqxzgs/c108103/202509/ce887d5b6d2c4ba68e8b666a2d498793/files/第三部分：政府性基金预算决算情况-20251017134104545004.rar",
-        "https://www.kashi.gov.cn/ksdqxzgs/c108103/202509/ce887d5b6d2c4ba68e8b666a2d498793/files/第四部分：国有资本经营预算决算情况-20251017134105773005.rar",
-        "https://www.kashi.gov.cn/ksdqxzgs/c108103/202509/ce887d5b6d2c4ba68e8b666a2d498793/files/第五部分：社会保险基金预算决算情况-20251017134106198006.rar",
-        "https://www.kashi.gov.cn/ksdqxzgs/c108103/202509/ce887d5b6d2c4ba68e8b666a2d498793/files/第六部分：地方政府债务公开情况-20251017134106638007.rar",
-        "https://www.kashi.gov.cn/ksdqxzgs/c108103/202509/ce887d5b6d2c4ba68e8b666a2d498793/files/第七部分：预算绩效管理工作情况-20251017134107388008.rar",
-        "https://www.kashi.gov.cn/ksdqxzgs/c108103/202509/ce887d5b6d2c4ba68e8b666a2d498793/files/第八部分：其他情况说明-20251017134116657009.rar"
+        "https://www.kashi.gov.cn/ksdqxzgs/c108121/202510/7cc5eeaed50b41748307d10f789958fb.shtml"
       ],
       "downloaded_files": "",
       "success": true
@@ -672,9 +650,7 @@
       "gov": "http://www.siping.gov.cn",
       "fin": "",
       "urls": [
-        "http://www.siping.gov.cn/zw/zwxxgkzl/czbmjsgk/202509/W020250930495722931832.pdf",
-        "http://www.siping.gov.cn/zw/zwxxgkzl/czbmjsgk/202509/W020250930495722939826.pdf",
-        "http://www.siping.gov.cn/zw/zwxxgkzl/czbmjsgk/202409/W020240929550760779620.pdf"
+        "http://www.siping.gov.cn/zw/zwxxgkzl/czbmjsgk/202509/t20250930_749455.html"
       ],
       "downloaded_files": "",
       "success": true
@@ -699,9 +675,11 @@
       "city": "大同市",
       "gov": "https://www.datong.gov.cn",
       "fin": "",
-      "urls": [],
+      "urls": [
+        "https://www.datong.gov.cn/index.php?s=news&c=category&id=82"
+      ],
       "downloaded_files": "",
-      "success": false
+      "success": true
     },
     {
       "city": "大庆市",
@@ -716,19 +694,7 @@
       "gov": "https://www.dali.gov.cn/",
       "fin": "",
       "urls": [
-        "https://www.dali.gov.cn/dlrmzf/xxgkml/202508/1c9c32135ea54531abd6d779400d0c78/files/9a7d748111e74ae896e14efadf11a9cd.xlsx",
-        "https://www.dali.gov.cn/dlrmzf/xxgkml/202508/1c9c32135ea54531abd6d779400d0c78/files/8f818efcf2524927ac0ee797425067f0.xlsx",
-        "https://www.dali.gov.cn/dlrmzf/xxgkml/202508/1c9c32135ea54531abd6d779400d0c78/files/8f9b10f746a3405f9ec03412a5041446.xlsx",
-        "https://www.dali.gov.cn/dlrmzf/xxgkml/202507/355448805629405ab6d6d7bf3eb17c28/files/917ed46bce504abbb7cb53bc50fc5f14.pdf",
-        "https://www.dali.gov.cn/dlrmzf/xxgkml/202507/355448805629405ab6d6d7bf3eb17c28/files/49d2715f0dca47399fdadcb1b3a838ad.pdf",
-        "https://www.dali.gov.cn/dlrmzf/xxgkml/202507/355448805629405ab6d6d7bf3eb17c28/files/7b135fd2fc3047f4a8c3c812a31a1c8f.pdf",
-        "https://www.dali.gov.cn/dlrmzf/xxgkml/202507/355448805629405ab6d6d7bf3eb17c28/files/25587f7d310d4b1c9fd0d8202f06685b.pdf",
-        "https://www.dali.gov.cn/dlrmzf/xxgkml/202507/355448805629405ab6d6d7bf3eb17c28/files/c91697c0be7c4045a7fce4f20c4b0c44.pdf",
-        "https://www.dali.gov.cn/dlrmzf/xxgkml/202507/355448805629405ab6d6d7bf3eb17c28/files/84921cd069c74f038f760dc2ae291273.pdf",
-        "https://www.dali.gov.cn/dlrmzf/xxgkml/202507/355448805629405ab6d6d7bf3eb17c28/files/ca2a73240fe7479192a014b513206a51.pdf",
-        "https://www.dali.gov.cn/dlrmzf/xxgkml/202507/355448805629405ab6d6d7bf3eb17c28/files/9e34f1a0f1f249b28cf900ef634c4f95.pdf",
-        "https://www.dali.gov.cn/dlrmzf/xxgkml/202507/355448805629405ab6d6d7bf3eb17c28/files/26dd4aab035a4f0fac1d57164968d79a.pdf",
-        "https://www.dali.gov.cn/dlrmzf/xxgkml/202507/355448805629405ab6d6d7bf3eb17c28/files/61806625a1114e36a7611bd1b468a8df.pdf"
+        "https://www.dali.gov.cn/dlrmzf/xxgkml/201511/2e864e0623f04caa8c0820d31a1b4950.shtml"
       ],
       "downloaded_files": "",
       "success": true
@@ -817,9 +783,11 @@
       "city": "安康市",
       "gov": "https://www.ankang.gov.cn",
       "fin": "",
-      "urls": [],
+      "urls": [
+        "https://www.ankang.gov.cn/Content-2853946.html"
+      ],
       "downloaded_files": "",
-      "success": false
+      "success": true
     },
     {
       "city": "安阳市",
@@ -841,9 +809,11 @@
       "city": "定西市",
       "gov": "https://www.dingxi.gov.cn",
       "fin": "",
-      "urls": [],
+      "urls": [
+        "http://www.dingxi.gov.cn/art/2025/8/20/art_16736_1849703.html"
+      ],
       "downloaded_files": "",
-      "success": false
+      "success": true
     },
     {
       "city": "宜宾市",
@@ -866,30 +836,7 @@
       "gov": "https://www.yichun.gov.cn",
       "fin": "",
       "urls": [
-        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202508/cd169604cdb5457a800a9fec09ded1b2/files/关于2024年市级决算和2025年上半年市级预算执行情况的报告.pdf",
-        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202508/cd169604cdb5457a800a9fec09ded1b2/files/1.2024年宜春市市本级一般公共预算收入决算表.pdf",
-        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202508/cd169604cdb5457a800a9fec09ded1b2/files/2.2024年宜春市市本级一般公共预算支出决算表.pdf",
-        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202508/cd169604cdb5457a800a9fec09ded1b2/files/3.2024年宜春市市本级一般公共预算支出决算分项表.pdf",
-        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202508/cd169604cdb5457a800a9fec09ded1b2/files/4.2024年宜春市市本级一般公共预算基本支出决算表.pdf",
-        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202508/cd169604cdb5457a800a9fec09ded1b2/files/5.2024年宜春市市本级一般公共预算税收返还和转移支付决算表（分县市区）.pdf",
-        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202508/cd169604cdb5457a800a9fec09ded1b2/files/6.2024年宜春市市本级一般公共预算转移支付决算表（分项目）.pdf",
-        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202508/cd169604cdb5457a800a9fec09ded1b2/files/9.2024年宜春市市本级政府性基金预算收入决算表.pdf",
-        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202508/cd169604cdb5457a800a9fec09ded1b2/files/10.2024年宜春市市本级政府性基金预算支出决算表.pdf",
-        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202508/cd169604cdb5457a800a9fec09ded1b2/files/11.2024年宜春市市本级政府性基金预算支出决算分项表.pdf",
-        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202508/cd169604cdb5457a800a9fec09ded1b2/files/12.2024年宜春市市本级政府性基金预算转移支付决算表（分县市区）.pdf",
-        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202508/cd169604cdb5457a800a9fec09ded1b2/files/13.2024年宜春市市本级政府性基金预算转移支付决算表（分项目）.pdf",
-        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202508/cd169604cdb5457a800a9fec09ded1b2/files/15.2024年宜春市市本级国有资本经营预算收入决算表.pdf",
-        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202508/cd169604cdb5457a800a9fec09ded1b2/files/16.2024年宜春市市本级国有资本经营预算支出决算表.pdf",
-        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202508/cd169604cdb5457a800a9fec09ded1b2/files/17.2024年宜春市市本级国有资本经营预算支出决算分项表.pdf",
-        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202508/cd169604cdb5457a800a9fec09ded1b2/files/18.2024年宜春市市本级国有资本经营预算转移支付决算表（分县市区）.pdf",
-        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202508/cd169604cdb5457a800a9fec09ded1b2/files/19.2024年宜春市国有资本经营预算转移支付决算表（分项目）.pdf",
-        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202508/cd169604cdb5457a800a9fec09ded1b2/files/20.2024年宜春市市级社会保险基金预算收入决算表.pdf",
-        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202508/cd169604cdb5457a800a9fec09ded1b2/files/21.2024年宜春市市级社会保险基金预算支出决算表.pdf",
-        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202508/cd169604cdb5457a800a9fec09ded1b2/files/22.2024年宜春市市级社会保险基金预算支出决算分项表.pdf",
-        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202508/cd169604cdb5457a800a9fec09ded1b2/files/24.2024年宜春市、市级及所属地区地方政府债务限额、余额决算表.pdf",
-        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202508/cd169604cdb5457a800a9fec09ded1b2/files/25.2024年宜春市、市级及所属地区地方政府债务发行、还本付息决算表.pdf",
-        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202508/cd169604cdb5457a800a9fec09ded1b2/files/29.2024年宜春市市本级财政拨款“三公”经费支出决算表.pdf",
-        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202408/2767eed4c40c4700979dce92a071399d/files/关于2023年市级决算和2024年上半年市级预算执行情况的报告.doc"
+        "https://www.yichun.gov.cn/ycsrmzf/sbjczyjs/202508/cd169604cdb5457a800a9fec09ded1b2.shtml"
       ],
       "downloaded_files": "",
       "success": true
@@ -1018,9 +965,11 @@
       "city": "广安市",
       "gov": "https://www.guang-an.gov.cn/",
       "fin": "",
-      "urls": [],
+      "urls": [
+        "https://www.guang-an.gov.cn/gasrmzfw/qsxyjs/pc/list.html"
+      ],
       "downloaded_files": "",
-      "success": false
+      "success": true
     },
     {
       "city": "广州市",
@@ -1034,9 +983,11 @@
       "city": "庆阳市",
       "gov": "https://www.qy.gov.cn",
       "fin": "",
-      "urls": [],
+      "urls": [
+        "https://www.qy.gov.cn/qy/czyjs/202509/b0646bd90bad45b1bc732dc22cd7a79b.shtml"
+      ],
       "downloaded_files": "",
-      "success": false
+      "success": true
     },
     {
       "city": "廊坊市",
@@ -1058,9 +1009,11 @@
       "city": "延边朝鲜族自治州",
       "gov": "http://yanbian.gov.cn",
       "fin": "",
-      "urls": [],
+      "urls": [
+        "http://zfxxgk.yanbian.gov.cn/cyqzf/xxgkml/202508/t20250825_553137.html"
+      ],
       "downloaded_files": "",
-      "success": false
+      "success": true
     },
     {
       "city": "开封市",
@@ -1163,7 +1116,7 @@
       "gov": "https://www.huizhou.gov.cn",
       "fin": "",
       "urls": [
-        "http://www.huizhou.gov.cn/hzczj/attachment/0/315/315300/5586753.pdf"
+        "http://www.huizhou.gov.cn/bmpd/hzczj/zt/hzsczyjsxxgkzl/sjczyjs/sjczjs/2024njs/index.html"
       ],
       "downloaded_files": "",
       "success": true
@@ -1205,7 +1158,7 @@
       "gov": "https://www.fushun.gov.cn",
       "fin": "",
       "urls": [
-        "https://www.fushun.gov.cn/fushun/e1065c27-357f-4572-95dc-ed8edc515c7c/beb2db6a-ad45-4e5c-8eb5-e0c53ce5c779/附表：2024年抚顺市财政决算公开表及说明.pdf"
+        "https://www.fushun.gov.cn/zwgk/002008/002008003/002008003001/20250718/e1065c27-357f-4572-95dc-ed8edc515c7c.html"
       ],
       "downloaded_files": "",
       "success": true
@@ -1254,9 +1207,11 @@
       "city": "新余市",
       "gov": "https://www.xinyu.gov.cn",
       "fin": "",
-      "urls": [],
+      "urls": [
+        "https://www.xinyu.gov.cn/xinyu/sjbmyjs/2025-09/30/content_930498b8b1bb45c9a0841fbad7a31038.shtml"
+      ],
       "downloaded_files": "",
-      "success": false
+      "success": true
     },
     {
       "city": "无锡市",
@@ -1366,17 +1321,21 @@
       "city": "朝阳市",
       "gov": "https://chaoyang.gov.cn/",
       "fin": "",
-      "urls": [],
+      "urls": [
+        "https://chaoyang.gov.cn/cyszf/zwgk/index.html"
+      ],
       "downloaded_files": "",
-      "success": false
+      "success": true
     },
     {
       "city": "本溪市",
       "gov": "https://www.benxi.gov.cn",
       "fin": "",
-      "urls": [],
+      "urls": [
+        "https://www.benxi.gov.cn/publicity/szfxx/czyjs/zfjs/132041"
+      ],
       "downloaded_files": "",
-      "success": false
+      "success": true
     },
     {
       "city": "来宾市",
@@ -1455,8 +1414,7 @@
       "gov": "https://www.meizhou.gov.cn",
       "fin": "",
       "urls": [
-        "https://www.meizhou.gov.cn/attachment/0/224/224622/2828982.pdf",
-        "https://www.meizhou.gov.cn/attachment/0/224/224623/2828982.pdf"
+        "https://www.meizhou.gov.cn/zwgk/zfjg/sczj/czxxgk/czyjszl/czjsgkzl/2024nd/content/post_2828982.html"
       ],
       "downloaded_files": "",
       "success": true
@@ -1489,9 +1447,11 @@
       "city": "武威市",
       "gov": "https://www.gswuwei.gov.cn/",
       "fin": "",
-      "urls": [],
+      "urls": [
+        "https://www.gswuwei.gov.cn/art/2025/8/21/art_28359_1503434.html"
+      ],
       "downloaded_files": "",
-      "success": false
+      "success": true
     },
     {
       "city": "武汉市",
@@ -1530,12 +1490,7 @@
       "gov": "https://www.shantou.gov.cn",
       "fin": "",
       "urls": [
-        "https://www.shantou.gov.cn/attachment/0/141/141187/2479453.pdf",
-        "https://www.shantou.gov.cn/attachment/0/141/141268/2479432.pdf",
-        "https://www.shantou.gov.cn/attachment/0/141/141187/2479451.pdf",
-        "https://www.shantou.gov.cn/attachment/0/141/141268/2479434.pdf",
-        "https://www.shantou.gov.cn/attachment/0/142/142241/2482354.pdf",
-        "https://www.shantou.gov.cn/attachment/0/142/142240/2482343.pdf"
+        "https://www.shantou.gov.cn/cnst/zwgk/jcxxgk/czyjsx/content/post_2479451.html"
       ],
       "downloaded_files": "",
       "success": true
@@ -1544,22 +1499,18 @@
       "city": "汕尾市",
       "gov": "https://www.shanwei.gov.cn",
       "fin": "",
-      "urls": [],
+      "urls": [
+        "http://www.shanwei.gov.cn/shanwei/swzdly/sgjf/czyjs/szfjs/2024/content/post_1182281.html"
+      ],
       "downloaded_files": "",
-      "success": false
+      "success": true
     },
     {
       "city": "江门市",
       "gov": "https://www.jiangmen.gov.cn",
       "fin": "",
       "urls": [
-        "http://www.jiangmen.gov.cn/attachment/0/353/353827/3373095.pdf",
-        "http://www.jiangmen.gov.cn/attachment/0/351/351712/3363485.pdf",
-        "http://www.jiangmen.gov.cn/attachment/0/354/354175/3376537.pdf",
-        "http://www.jiangmen.gov.cn/attachment/0/353/353832/3373123.pdf",
-        "http://www.jiangmen.gov.cn/attachment/0/353/353829/3373118.pdf",
-        "http://www.jiangmen.gov.cn/attachment/0/353/353164/3370879.pdf",
-        "http://www.jiangmen.gov.cn/attachment/0/354/354180/3376543.pdf"
+        "http://www.jiangmen.gov.cn/newzwgk/czgk/sczyjs/content/post_3363485.html"
       ],
       "downloaded_files": "",
       "success": true
@@ -1585,8 +1536,7 @@
       "gov": "https://www.cangzhou.gov.cn",
       "fin": "",
       "urls": [
-        "https://www.cangzhou.gov.cn/cangzhou/c100155/202509/cc44ec642a6f4a37bfdf0993dbaf1856/files/a1572a7519bd493d91e08bc9b70e47db.pdf",
-        "https://www.cangzhou.gov.cn/cangzhou/c100155/202509/46f6f7255adb49f4939e4fd5f7b90c55/files/ffb10294b6be40feb601a8eb134b9e17.pdf"
+        "https://www.cangzhou.gov.cn/cangzhou/c100155/202509/cc44ec642a6f4a37bfdf0993dbaf1856.shtml"
       ],
       "downloaded_files": "",
       "success": true
@@ -1603,17 +1553,21 @@
       "city": "河源市",
       "gov": "http://www.heyuan.gov.cn",
       "fin": "",
-      "urls": [],
+      "urls": [
+        "http://www.heyuan.gov.cn/zwgk/zdlyxx/czyjshsgjf/czzxxx/content/post_668796.html"
+      ],
       "downloaded_files": "",
-      "success": false
+      "success": true
     },
     {
       "city": "泉州市",
       "gov": "https://www.quanzhou.gov.cn",
       "fin": "",
-      "urls": [],
+      "urls": [
+        "https://www.quanzhou.gov.cn/zfb/xxgk/ztxxgk/czzj/bmczyjs/202508/t20250804_3197036.htm"
+      ],
       "downloaded_files": "",
-      "success": false
+      "success": true
     },
     {
       "city": "泰安市",
@@ -1636,37 +1590,7 @@
       "gov": "https://www.luzhou.gov.cn/",
       "fin": "",
       "urls": [
-        "http://www.luzhou.gov.cn/Upload/czj/ContentManage/Article/File/2025/09/17/1.关于泸州市2024年市级决算的报告.pdf",
-        "http://www.luzhou.gov.cn/Upload/czj/ContentManage/Article/File/2025/09/17/2.2024年泸州市地方一般公共预算收入决算表.pdf",
-        "http://www.luzhou.gov.cn/Upload/czj/ContentManage/Article/File/2025/09/17/3.2024年泸州市一般公共预算支出决算表.pdf",
-        "http://www.luzhou.gov.cn/Upload/czj/ContentManage/Article/File/2025/09/17/4.2024年泸州市一般公共预算收支决算平衡表.pdf",
-        "http://www.luzhou.gov.cn/Upload/czj/ContentManage/Article/File/2025/09/17/5.2024年泸州市市级地方一般公共预算收入决算表.pdf",
-        "http://www.luzhou.gov.cn/Upload/czj/ContentManage/Article/File/2025/09/17/6.2024年泸州市市级一般公共预算支出决算表.pdf",
-        "http://www.luzhou.gov.cn/Upload/czj/ContentManage/Article/File/2025/09/17/7.2024年泸州市市级一般公共预算收支决算平衡表.pdf",
-        "http://www.luzhou.gov.cn/Upload/czj/ContentManage/Article/File/2025/09/17/8.2024年中省对泸州市一般公共预算转移支付补助决算表.pdf",
-        "http://www.luzhou.gov.cn/Upload/czj/ContentManage/Article/File/2025/09/17/10.2024年泸州市市本级一般公共预算经济分类科目支出决算表.pdf",
-        "http://www.luzhou.gov.cn/Upload/czj/ContentManage/Article/File/2025/09/17/11.2024年泸州市市级一般公共预算结转决算表.pdf",
-        "http://www.luzhou.gov.cn/Upload/czj/ContentManage/Article/File/2025/09/17/12.2024年泸州市市级预算内基本建设决算表.pdf",
-        "http://www.luzhou.gov.cn/Upload/czj/ContentManage/Article/File/2025/09/17/14.2024年泸州市政府性基金预算收入决算表.pdf",
-        "http://www.luzhou.gov.cn/Upload/czj/ContentManage/Article/File/2025/09/17/15.2024年泸州市政府性基金预算支出决算表.pdf",
-        "http://www.luzhou.gov.cn/Upload/czj/ContentManage/Article/File/2025/09/17/16.2024年泸州市政府性基金预算收支决算平衡表.pdf",
-        "http://www.luzhou.gov.cn/Upload/czj/ContentManage/Article/File/2025/09/17/17.2024年泸州市市级政府性基金预算收入决算表.pdf",
-        "http://www.luzhou.gov.cn/Upload/czj/ContentManage/Article/File/2025/09/17/18.2024年泸州市市级政府性基金预算支出决算表.pdf",
-        "http://www.luzhou.gov.cn/Upload/czj/ContentManage/Article/File/2025/09/17/19.2024年泸州市市级政府性基金预算收支决算平衡表.pdf",
-        "http://www.luzhou.gov.cn/Upload/czj/ContentManage/Article/File/2025/09/17/20.2024年中省对泸州市政府性基金预算转移支付补助决算表.pdf",
-        "http://www.luzhou.gov.cn/Upload/czj/ContentManage/Article/File/2025/09/17/22.2024年泸州市市级政府性基金预算结转决算表.pdf",
-        "http://www.luzhou.gov.cn/Upload/czj/ContentManage/Article/File/2025/09/17/23.2024年泸州市国有资本经营预算收入决算表.pdf",
-        "http://www.luzhou.gov.cn/Upload/czj/ContentManage/Article/File/2025/09/17/24.2024年泸州市国有资本经营预算支出决算表.pdf",
-        "http://www.luzhou.gov.cn/Upload/czj/ContentManage/Article/File/2025/09/17/25.2024年泸州市国有资本经营预算收支决算平衡表.pdf",
-        "http://www.luzhou.gov.cn/Upload/czj/ContentManage/Article/File/2025/09/17/26.2024年泸州市市级国有资本经营预算收入决算表.pdf",
-        "http://www.luzhou.gov.cn/Upload/czj/ContentManage/Article/File/2025/09/17/27.2024年泸州市市级国有资本经营预算支出决算表.pdf",
-        "http://www.luzhou.gov.cn/Upload/czj/ContentManage/Article/File/2025/09/17/28.2024年泸州市市级国有资本经营预算收支决算平衡表.pdf",
-        "http://www.luzhou.gov.cn/Upload/czj/ContentManage/Article/File/2025/09/17/29.2024年泸州市社会保险基金预算收入决算表.pdf",
-        "http://www.luzhou.gov.cn/Upload/czj/ContentManage/Article/File/2025/09/17/30.2024年泸州市社会保险基金预算支出决算表.pdf",
-        "http://www.luzhou.gov.cn/Upload/czj/ContentManage/Article/File/2025/09/17/31.2024年泸州市社会保险基金预算收支决算平衡表.pdf",
-        "http://www.luzhou.gov.cn/Upload/czj/ContentManage/Article/File/2025/09/17/32.2024年泸州市市级社会保险基金预算收入决算表.pdf",
-        "http://www.luzhou.gov.cn/Upload/czj/ContentManage/Article/File/2025/09/17/33.2024年泸州市市级社会保险基金预算支出决算表.pdf",
-        "http://www.luzhou.gov.cn/Upload/czj/ContentManage/Article/File/2025/09/17/34.2024年泸州市市级社会保险基金预算收支决算平衡表.pdf"
+        "http://www.luzhou.gov.cn/zw/fdzdgknr/sjbmys"
       ],
       "downloaded_files": "",
       "success": true
@@ -1739,17 +1663,21 @@
       "city": "淄博市",
       "gov": "https://www.zibo.gov.cn",
       "fin": "",
-      "urls": [],
+      "urls": [
+        "http://js.zibo.gov.cn/gongkai/channel_c_5f9fa491ab327f36e4c1305d_n_1605682438.818/doc_68d67be80e2f3689cc4b5d68.html"
+      ],
       "downloaded_files": "",
-      "success": false
+      "success": true
     },
     {
       "city": "淮北市",
       "gov": "https://www.huaibei.gov.cn",
       "fin": "",
-      "urls": [],
+      "urls": [
+        "https://www.huaibei.gov.cn/content/article/64836291"
+      ],
       "downloaded_files": "",
-      "success": false
+      "success": true
     },
     {
       "city": "淮南市",
@@ -1827,9 +1755,11 @@
       "city": "湛江市",
       "gov": "https://www.zhanjiang.gov.cn",
       "fin": "",
-      "urls": [],
+      "urls": [
+        "https://www.zhanjiang.gov.cn/zdlyxxgk/czyjshsg/sgjf/index.html"
+      ],
       "downloaded_files": "",
-      "success": false
+      "success": true
     },
     {
       "city": "滁州市",
@@ -1875,9 +1805,11 @@
       "city": "潮州市",
       "gov": "https://www.chaozhou.gov.cn",
       "fin": "",
-      "urls": [],
+      "urls": [
+        "https://www.chaozhou.gov.cn/zwgk/szfgz/sczj/bmwj/content/post_3966660.html"
+      ],
       "downloaded_files": "",
-      "success": false
+      "success": true
     },
     {
       "city": "濮阳市",
@@ -1940,7 +1872,7 @@
       "gov": "https://www.zhuhai.gov.cn",
       "fin": "",
       "urls": [
-        "https://www.zhuhai.gov.cn/attachment/0/413/413706/3832947.pdf"
+        "https://www.zhuhai.gov.cn/xw/ztjj/zhszdlyxxgkzl/czysjshsgjfgk/czyjs/content/post_3832947.html"
       ],
       "downloaded_files": "",
       "success": true
@@ -1965,9 +1897,11 @@
       "city": "白城市",
       "gov": "http://www.bc.gov.cn",
       "fin": "",
-      "urls": [],
+      "urls": [
+        "http://www.bc.gov.cn/dlsbcx/c102106/common_list.shtml"
+      ],
       "downloaded_files": "",
-      "success": false
+      "success": true
     },
     {
       "city": "白山市",
@@ -1981,9 +1915,11 @@
       "city": "白银市",
       "gov": "https://www.baiyin.gov.cn",
       "fin": "",
-      "urls": [],
+      "urls": [
+        "https://www.baiyin.gov.cn/bysczj/gzdt/art/2025/art_733b3e0413c640a4a00340ffab7db3a4.html"
+      ],
       "downloaded_files": "",
-      "success": false
+      "success": true
     },
     {
       "city": "百色市",
@@ -2030,10 +1966,7 @@
       "gov": "https://www.shizuishan.gov.cn",
       "fin": "",
       "urls": [
-        "https://www.shizuishan.gov.cn/zwgk/zfxxgkml/czyjsgk/bmjs_45077/2024/202509/P020250925591625997977.pdf",
-        "https://www.shizuishan.gov.cn/zwgk/zfxxgkml/czyjsgk/bmjs_45077/2024/202509/P020250925595176655163.pdf",
-        "https://www.shizuishan.gov.cn/zwgk/zfxxgkml/czyjsgk/bmjs_45077/2024/202509/P020250925591128914685.pdf",
-        "https://www.shizuishan.gov.cn/zwgk/zfxxgkml/czyjsgk/bmjs_45077/2024/202509/P020250925594213126196.pdf"
+        "https://www.shizuishan.gov.cn/zwgk/zfxxgkml/czyjsgk/bmjs_45077/2024/202509/t20250925_5038033.html"
       ],
       "downloaded_files": "",
       "success": true
@@ -2106,9 +2039,11 @@
       "city": "肇庆市",
       "gov": "https://www.zhaoqing.gov.cn",
       "fin": "",
-      "urls": [],
+      "urls": [
+        "https://www.zhaoqing.gov.cn/zfxxgklm/czj/zdlyxxgk/czyjs/content/post_3156433.html"
+      ],
       "downloaded_files": "",
-      "success": false
+      "success": true
     },
     {
       "city": "自贡市",
@@ -2202,12 +2137,9 @@
       "city": "葫芦岛市",
       "gov": "https://www.hld.gov.cn",
       "fin": "",
-      "urls": [
-        "https://czj.hld.gov.cn/zwgk/yjsgk/czjsgk/202507/P020250715390583668847.pdf",
-        "https://czj.hld.gov.cn/zwgk/yjsgk/czjsgk/202407/P020240718349143072598.pdf"
-      ],
+      "urls": [],
       "downloaded_files": "",
-      "success": true
+      "success": false
     },
     {
       "city": "蚌埠市",
@@ -2277,15 +2209,9 @@
       "city": "许昌市",
       "gov": "https://www.xuchang.gov.cn",
       "fin": "",
-      "urls": [
-        "https://www.xuchang.gov.cn/uploadfile/2045af94-75d8-4ef9-9e5b-e49cdf50e2f2/%E8%AE%B8%E6%98%8C%E5%B8%822023%E5%B9%B4%E5%85%A8%E5%B8%82%E5%8F%8A%E5%B8%82%E6%9C%AC%E7%BA%A7%E5%86%B3%E7%AE%97%E8%8D%89%E6%A1%88%E8%A1%A8%E6%A0%BC.pdf",
-        "https://www.xuchang.gov.cn/uploadfile/2045af94-75d8-4ef9-9e5b-e49cdf50e2f2/2023%E5%B9%B4%E8%AE%B8%E6%98%8C%E5%B8%82%E6%94%BF%E5%BA%9C%E5%86%B3%E7%AE%97%E5%85%AC%E5%BC%80%E7%9B%AE%E5%BD%95.pdf",
-        "https://www.xuchang.gov.cn/uploadfile/2045af94-75d8-4ef9-9e5b-e49cdf50e2f2/%E5%85%B3%E4%BA%8E2023%E5%B9%B4%E5%85%A8%E5%B8%82%E5%8F%8A%E5%B8%82%E6%9C%AC%E7%BA%A7%E5%86%B3%E7%AE%97%E8%8D%89%E6%A1%88%E7%9A%84%E8%AF%B4%E6%98%8E.pdf",
-        "https://www.xuchang.gov.cn/uploadfile/2045af94-75d8-4ef9-9e5b-e49cdf50e2f2/%E5%85%B3%E4%BA%8E%E8%AE%B8%E6%98%8C%E5%B8%822023%E5%B9%B4%E8%B4%A2%E6%94%BF%E5%86%B3%E7%AE%97%E5%92%8C2024%E5%B9%B41%E2%80%946%E6%9C%88%E4%BB%BD%E8%B4%A2%E6%94%BF%E9%A2%84%E7%AE%97%E6%89%A7%E8%A1%8C%E6%83%85%E5%86%B5%E7%9A%84%E6%8A%A5%E5%91%8A.pdf",
-        "https://www.xuchang.gov.cn/uploadfile/2045af94-75d8-4ef9-9e5b-e49cdf50e2f2/%E8%AE%B8%E6%98%8C%E5%B8%82%E4%BA%BA%E5%A4%A7%E5%B8%B8%E5%A7%94%E4%BC%9A%E5%85%B3%E4%BA%8E%E6%89%B9%E5%87%862023%E5%B9%B4%E5%B8%82%E6%9C%AC%E7%BA%A7%E8%B4%A2%E6%94%BF%E5%86%B3%E7%AE%97%E7%9A%84%E5%86%B3%E8%AE%AE.pdf"
-      ],
+      "urls": [],
       "downloaded_files": "",
-      "success": true
+      "success": false
     },
     {
       "city": "贵港市",
@@ -2379,18 +2305,18 @@
       "city": "迪庆藏族自治州",
       "gov": "http://www.diqing.gov.cn/",
       "fin": "",
-      "urls": [],
+      "urls": [
+        "http://www.diqing.gov.cn/zfxxgk_dqzzf_zczj/fdzdgknr/caizhengxinxigongkaizhuanlan/zhengfuyujuesuan/202508/20250828_231556.html"
+      ],
       "downloaded_files": "",
-      "success": false
+      "success": true
     },
     {
       "city": "通化市",
       "gov": "http://www.tonghua.gov.cn",
       "fin": "",
       "urls": [
-        "http://www.tonghua.gov.cn/zwgk/czsj/ztjs/202509/W020250916482816146803.pdf",
-        "http://www.tonghua.gov.cn/zwgk/czsj/ztjs/202509/W020250916481430885294.pdf",
-        "http://www.tonghua.gov.cn/zwgk/czsj/ztjs/202509/W020250916481808431488.pdf"
+        "http://www.tonghua.gov.cn/zwgk/czsj/ztjs/202509/t20250916_751077.html"
       ],
       "downloaded_files": "",
       "success": true
@@ -2407,9 +2333,11 @@
       "city": "遂宁市",
       "gov": "https://www.suining.gov.cn",
       "fin": "",
-      "urls": [],
+      "urls": [
+        "https://www.suining.gov.cn/gongkai/show/09b25a3ecda115da879c77bbf0134bc4.html"
+      ],
       "downloaded_files": "",
-      "success": false
+      "success": true
     },
     {
       "city": "遵义市",
@@ -2423,17 +2351,21 @@
       "city": "邢台市",
       "gov": "http://www.xingtai.gov.cn",
       "fin": "",
-      "urls": [],
+      "urls": [
+        "http://www.xingtai.gov.cn/zwgk/czyjszl/zfjs/202509/t20250922_723527.html"
+      ],
       "downloaded_files": "",
-      "success": false
+      "success": true
     },
     {
       "city": "那曲市",
       "gov": "http://www.naqu.gov.cn",
       "fin": "",
-      "urls": [],
+      "urls": [
+        "http://www.naqu.gov.cn/nqsrmzf/c100022/202509/4b9a285b081a4ceb807f1ff0cdddeccf.shtml"
+      ],
       "downloaded_files": "",
-      "success": false
+      "success": true
     },
     {
       "city": "邯郸市",
@@ -2447,9 +2379,11 @@
       "city": "邵阳市",
       "gov": "https://www.shaoyang.gov.cn",
       "fin": "",
-      "urls": [],
+      "urls": [
+        "https://www.shaoyang.gov.cn/shaoyang/sbjzfyjs/202509/e24852b6f28d463490452362020345ba.shtml"
+      ],
       "downloaded_files": "",
-      "success": false
+      "success": true
     },
     {
       "city": "郑州市",
@@ -2559,9 +2493,11 @@
       "city": "银川市",
       "gov": "https://www.yinchuan.gov.cn",
       "fin": "",
-      "urls": [],
+      "urls": [
+        "https://www.yinchuan.gov.cn/xxgk/bmxxgkml/sczj/xxgkml_2101/czyjsjsgjf_2119/zfjs/202509/t20250930_5045718.html"
+      ],
       "downloaded_files": "",
-      "success": false
+      "success": true
     },
     {
       "city": "锡林郭勒盟",
@@ -2671,9 +2607,11 @@
       "city": "阿坝藏族羌族自治州",
       "gov": "https://www.abazhou.gov.cn/",
       "fin": "",
-      "urls": [],
+      "urls": [
+        "https://www.abazhou.gov.cn/abazhou/c109420/202509/dc5f4752de7244debb0f5d7fd9c7628e.shtml"
+      ],
       "downloaded_files": "",
-      "success": false
+      "success": true
     },
     {
       "city": "阿拉善盟",
@@ -2735,9 +2673,11 @@
       "city": "韶关市",
       "gov": "https://www.sg.gov.cn",
       "fin": "",
-      "urls": [],
+      "urls": [
+        "https://www.sg.gov.cn/zw/yjszl/index.html"
+      ],
       "downloaded_files": "",
-      "success": false
+      "success": true
     },
     {
       "city": "马鞍山市",
@@ -2775,9 +2715,11 @@
       "city": "鹤岗市",
       "gov": "https://www.hegang.gov.cn",
       "fin": "",
-      "urls": [],
+      "urls": [
+        "https://www.hegang.gov.cn/hegang/szfyjs/202510/81460.shtml"
+      ],
       "downloaded_files": "",
-      "success": false
+      "success": true
     },
     {
       "city": "鹰潭市",
